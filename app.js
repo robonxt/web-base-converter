@@ -48,17 +48,17 @@ function showResult(message, isError = false) {
 }
 
 const conversionInfo = {
-  '2-8': 'Binary to Octal:\nGroup binary digits into sets of 3 (from right)\nand convert each group to octal.\nExample: 101011 → 101 011 → 5 3 → 53.',
+  '2-8': 'Binary to Octal:\nGroup binary digits into sets of 3 (from right) and convert each group to octal.\nExample: 101011 → 101 011 → 5 3 → 53.',
   '2-10': 'Binary to Decimal:\nMultiply each digit by 2 raised to its position power\n(from right, starting at 0) and sum.\nExample: 1011 → 1×2³ + 0×2² + 1×2¹ + 1×2⁰ → 11.',
-  '2-16': 'Binary to Hexadecimal:\nGroup binary digits into sets of 4 (from right)\nand convert each group to hex.\nExample: 101111 → 10 1111 → 2 F → 2F.',
+  '2-16': 'Binary to Hexadecimal:\nGroup binary digits into sets of 4 (from right) and convert each group to hex.\nExample: 101111 → 10 1111 → 2 F → 2F.',
   '8-2': 'Octal to Binary:\nConvert each octal digit to its 3-digit binary equivalent.\nExample: 27 → 2 = 010, 7 = 111 → 010111.',
   '8-10': 'Octal to Decimal:\nMultiply each digit by 8 raised to its position power\n(from right, starting at 0) and sum.\nExample: 37 → 3×8¹ + 7×8⁰ → 31.',
-  '8-16': 'Octal to Hexadecimal:\nFirst convert to binary, then group into sets of 4\nand convert to hex.\nExample: 27 → 010111 → 0001 0111 → 17.',
-  '10-2': 'Decimal to Binary:\nRepeatedly divide by 2 and record remainders\nin reverse order.\nExample: 13 → 1101.',
-  '10-8': 'Decimal to Octal:\nRepeatedly divide by 8 and record remainders\nin reverse order.\nExample: 59 → 73.',
-  '10-16': 'Decimal to Hexadecimal:\nRepeatedly divide by 16 and record remainders\n(10=A, 11=B, etc.) in reverse order.\nExample: 43 → 2B.',
+  '8-16': 'Octal to Hexadecimal:\nFirst convert to binary, then group into sets of 4 and convert to hex.\nExample: 27 → 010111 → 0001 0111 → 17.',
+  '10-2': 'Decimal to Binary:\nRepeatedly divide by 2 and record remainders in reverse order.\nExample: 13 → 1101.',
+  '10-8': 'Decimal to Octal:\nRepeatedly divide by 8 and record remainders in reverse order.\nExample: 59 → 73.',
+  '10-16': 'Decimal to Hexadecimal:\nRepeatedly divide by 16 and record remainders\n(10=A, 11=B, 12=C, 13=D, 14=E, 15=F) in reverse order.\nExample: 43 → 2B.',
   '16-2': 'Hexadecimal to Binary:\nConvert each hex digit to its 4-digit binary equivalent.\nExample: 2F → 00101111.',
-  '16-8': 'Hexadecimal to Octal:\nFirst convert to binary, then group into sets of 3\nand convert to octal.\nExample: 2F → 27.',
+  '16-8': 'Hexadecimal to Octal:\nFirst convert to binary, then group into sets of 3 and convert to octal.\nExample: 2F → 27.',
   '16-10': 'Hexadecimal to Decimal:\nMultiply each digit by 16 raised to its position power\n(from right, starting at 0) and sum.\nExample: 2F → 47.'
 };
 
@@ -80,56 +80,27 @@ document.getElementById('toBase').addEventListener('change', function() {
 });
 
 // Initial info update
-const initialFrom = document.getElementById('fromBase').value;
-const initialTo = document.getElementById('toBase').value;
-updateInfo(initialFrom, initialTo);
+updateInfo(document.getElementById('fromBase').value, document.getElementById('toBase').value);
 
 // Copy to clipboard functionality
-const copyBtn = document.getElementById('copy-solution');
-const solution = document.getElementById('solution');
-
-copyBtn.addEventListener('click', async () => {
-  try {
-    await navigator.clipboard.writeText(solution.textContent);
-    const originalText = solution.textContent;
-    solution.textContent = 'Copied to clipboard!';
+document.getElementById('copy-solution').addEventListener('click', () => {
+  const solution = document.getElementById('solution').innerText;
+  navigator.clipboard.writeText(solution).then(() => {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
     setTimeout(() => {
-      solution.textContent = originalText;
+      toast.classList.remove('show');
     }, 2000);
-  } catch (err) {
-    showResult('Failed to copy!', true);
-  }
+  });
 });
 
 // Theme Management
 const themeBtn = document.getElementById('theme-btn');
 const root = document.documentElement;
 
-const lightTheme = {
-  '--bg-main': '#f5f5f5',
-  '--bg-surface': '#f8f9fa',
-  '--border-color': '#ccc',
-  '--text-primary': '#000',
-  '--text-secondary': '#777',
-  '--shadow': '0 2px 8px rgba(0,0,0,0.1)'
-};
-
-const darkTheme = {
-  '--bg-main': '#121212',
-  '--bg-surface': '#1E1E1E',
-  '--border-color': '#333',
-  '--text-primary': '#FFFFFF',
-  '--text-secondary': '#AAAAAA',
-  '--shadow': '0 2px 8px rgba(0,0,0,0.3)'
-};
-
 function toggleTheme() {
   const isDark = root.classList.toggle('dark-theme');
   themeBtn.textContent = isDark ? '☀️' : '🌙';
-  const theme = isDark ? darkTheme : lightTheme;
-  Object.entries(theme).forEach(([key, value]) => {
-    root.style.setProperty(key, value);
-  });
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
 }
 
@@ -138,3 +109,16 @@ const savedTheme = localStorage.getItem('theme') || 'light';
 if (savedTheme === 'dark') toggleTheme();
 
 themeBtn.addEventListener('click', toggleTheme);
+
+// Service Worker Registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(registration => {
+        console.log('ServiceWorker registration successful');
+      })
+      .catch(err => {
+        console.log('ServiceWorker registration failed: ', err);
+      });
+  });
+}

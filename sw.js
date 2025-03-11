@@ -1,4 +1,4 @@
-const CACHE_NAME = 'number-converter-v2';
+const CACHE_NAME = 'base-converter-v1';
 const ASSETS = [
   '/',
   '/index.html',
@@ -12,7 +12,11 @@ const ASSETS = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(ASSETS))
+      .then((cache) => {
+        return cache.addAll(ASSETS).catch((error) => {
+          console.error('Failed to cache:', error);
+        });
+      })
   );
 });
 

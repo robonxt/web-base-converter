@@ -1,7 +1,7 @@
 {
-  "name": "Number Converter",
-  "short_name": "Converter",
-  "description": "Convert between number systems with ease",
+  "name": "Base Converter",
+  "short_name": "Base Conv",
+  "description": "Convert between number bases with ease",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#f5f5f5",
