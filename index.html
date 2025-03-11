@@ -1,51 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Base Converter">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, orientation=portrait, maximum-scale=1.0, user-scalable=no">
+  <meta name="screen-orientation" content="portrait">
+  <meta name="x5-orientation" content="portrait">
   <title>Base Converter</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="description"
+    content="A lightweight, dependency-free Base Converter PWA for converting between number systems (Binary, Octal, Decimal, Hexadecimal). Works offline and includes light/dark themes for enhanced usability.">
+  <meta property="og:title" content="Base Converter">
+  <meta property="og:description"
+    content="A lightweight, dependency-free Base Converter PWA for converting between number systems (Binary, Octal, Decimal, Hexadecimal). Works offline and includes light/dark themes for enhanced usability.">
+  <meta property="og:type" content="website">
+  <!-- <meta property="og:image" content="https://kmap.robonxt.xyz/assets/logo/base-converter-logo-v1.jpeg"> -->
+  <!-- <meta property="og:url" content="https://kmap.robonxt.xyz"> -->
+  <!-- <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico"> -->
+  <!-- <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" /> -->
+  <!-- <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/android-chrome-192.png"> -->
+  <!-- <link rel="icon" type="image/png" sizes="512x512" href="assets/icons/android-chrome-512.png"> -->
+  <!-- <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png"> -->
+  <!-- <meta name="msapplication-TileImage" content="assets/icons/mstile.png"> -->
+  <!-- <meta name="msapplication-TileColor" content="#ffffff"> -->
+  <meta name="theme-color" content="#ffffff">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
   <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
   <div class="container">
-    <h1>Base Converter</h1>
-    <form id="converter-form">
-      <div class="input-group">
-        <label for="inputValue">Enter Value:</label>
-        <input type="text" id="inputValue" required>
+    <div class="header-container">
+      <div class="header-title">Base Converter</div>
+      <div class="header-controls">
+        <button class="svg-button" id="theme-toggle" aria-label="Toggle theme">
+          <svg class="light-theme-icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2" />
+            <path
+              d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          </svg>
+          <svg class="dark-theme-icon" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <button class="svg-button" id="info-btn" aria-label="Show Information">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" />
+            <circle cx="12" cy="8" r="1" fill="currentColor" />
+            <path d="M12 11v7" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
       </div>
-      <div class="dropdown-container">
+    </div>
+
+    <div class="input-container">
+      <form id="converter-form">
         <div class="input-group">
-          <label for="fromBase">From Base:</label>
-          <select id="fromBase">
-            <option value="2">Binary</option>
-            <option value="8">Octal</option>
-            <option value="10">Decimal</option>
-            <option value="16">Hexadecimal</option>
-          </select>
+          <label for="inputValue">Enter Value:</label>
+          <input type="text" id="inputValue" required>
         </div>
-        <div class="input-group">
-          <label for="toBase">To Base:</label>
-          <select id="toBase">
-            <option value="2">Binary</option>
-            <option value="8">Octal</option>
-            <option value="10">Decimal</option>
-            <option value="16">Hexadecimal</option>
-          </select>
+        <div class="dropdown-container">
+          <div class="input-group">
+            <label for="fromBase">From Base:</label>
+            <select id="fromBase">
+              <option value="2">Binary</option>
+              <option value="8">Octal</option>
+              <option value="10">Decimal</option>
+              <option value="16">Hexadecimal</option>
+            </select>
+          </div>
+          <span class="arrow">→</span>
+          <div class="input-group">
+            <label for="toBase">To Base:</label>
+            <select id="toBase">
+              <option value="2">Binary</option>
+              <option value="8">Octal</option>
+              <option value="10">Decimal</option>
+              <option value="16">Hexadecimal</option>
+            </select>
+          </div>
         </div>
-      </div>
-      <button type="submit">Convert</button>
-    </form>
+        <button type="submit">Convert</button>
+      </form>
+    </div>
+
     <div class="solution-container">
-      <div class="solution-header">
-        <h3>Answer</h3>
-      </div>
+      <div class="solution-title">Answer</div>
       <div class="solution-toolbar">
-        <div id="solution" class="result-text"></div>
-        <button id="copy-solution" class="copy-btn" title="Copy to clipboard">
+        <div class="solution result-text"></div>
+        <button id="copy-solution" class="copy-btn svg-button" title="Copy to clipboard">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round">
             <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
@@ -53,13 +101,15 @@
           </svg>
         </button>
       </div>
+
     </div>
-    <div id="info" class="info-container"></div>
-  </div>
-  <div class="theme-toggle">
-    <button id="theme-btn">🌙</button>
+    <div class="conversion-container">
+      <div class="conversion-title">Conversion Method</div>
+      <div id="conversionSteps"></div>
+    </div>
   </div>
   <div id="toast" class="toast">Copied to clipboard!</div>
   <script src="app.js"></script>
 </body>
+
 </html>
