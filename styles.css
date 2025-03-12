@@ -57,7 +57,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-html, body {
+body {
   overscroll-behavior-y: none;
   line-height: 1.6;
   color: var(--text-primary);
