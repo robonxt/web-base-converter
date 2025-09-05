@@ -1,33 +1,26 @@
 :root {
 
   /* Tokens */
-  --teal: #14B8A6;
-  --bold-red: #B91C1C;
-  --paper: #F5F7FA;
-  --deep-onyx: #161F27;
-  --onyx: #1F2933;
-  --slate: #343F4B;
-  --medium-gray: #8A94A6;
-  --light-gray: #E1E5EA;
-  --green: #22C55E;
-  --amber: #F59E0B;
+  --brand-teal: #14B8A6;
+  --brand-red: #B91C1C;
+  --gray-200: #E5E7EB;
 
   /* Light theme */
-  --color-primary: var(--teal);
-  --color-accent: var(--bold-red);
-  --color-background: var(--paper);
-  --color-surface: var(--paper);
-  /* Distinct header surface (Deep Teal) */
-  --color-header: #0F8F83; /* deep teal */
-  --color-header-border: #0B6B62; /* darker teal for border */
-  --color-text-high: var(--onyx);
-  --color-text-medium: var(--medium-gray);
-  --color-text-low: var(--light-gray);
-  --color-border-default: var(--light-gray);
-  --color-border-focus: var(--teal);
-  --color-success: var(--green);
-  --color-warning: var(--amber);
-  --color-error: var(--bold-red);
+  --color-primary: var(--brand-teal);
+  --color-secondary: var(--brand-red);
+  --color-background: #FFFFFF;
+  --color-surface: #FFFFFF;
+  /* Header uses brand teal with token-consistent mixes */
+  --color-header: var(--color-primary);
+  --color-header-border: color-mix(in srgb, var(--color-primary), black 25%);
+  --color-text-high: #111827;
+  --color-text-medium: #4B5563;
+  --color-text-low: #6B7280;
+  --color-border-default: var(--gray-200);
+  --color-border-focus: var(--brand-teal);
+  --color-success: #059669;
+  --color-warning: #D97706;
+  --color-error: #DC2626;
 
   /* Typography */
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -69,8 +62,8 @@
 
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
 
   /* Borders */
   --stroke-sm: 1px;
@@ -93,20 +86,19 @@
   --icon-sm: 16px;
   --icon-md: 24px;
   --icon-lg: 32px;
-  --icon-xl: 48px;
 
   /* Controls */
   --touch-target: 44px;
 }
 
 [data-theme='dark'] {
-  --color-background: var(--deep-onyx);
-  --color-surface: var(--onyx);
-  --color-header: #0B6B62; /* slightly deeper teal for dark mode */
-  --color-header-border: #084D47;
+  --color-background: #111827;
+  --color-surface: #1F2937;
+  --color-header: color-mix(in srgb, var(--color-primary), black 20%);
+  --color-header-border: color-mix(in srgb, var(--color-primary), black 35%);
   --color-text-high: #FFFFFF; /* ensure maximum contrast on dark */
-  --color-text-low: var(--slate);
-  --color-border-default: var(--slate);
+  --color-text-low: #6B7280;
+  --color-border-default: #374151;
 }
 
 /* Base */
@@ -277,11 +269,9 @@ a:hover {
   background-color: white;
 }
 
-.header-bar-content .btn-ghost,
 .header-bar-content .btn-icon {
   color: white;
 }
-.header-bar-content .btn-ghost:hover,
 .header-bar-content .btn-icon:hover {
   background-color: rgba(255, 255, 255, 0.16);
   color: white;
@@ -410,19 +400,19 @@ a:hover {
 }
 
 
-/* Secondary/Accent Button */
+/* Secondary Button */
 .btn-secondary {
-  background-color: var(--color-accent);
+  background-color: var(--color-secondary);
   color: white;
 }
 
 .btn-secondary:hover {
-  background-color: color-mix(in srgb, var(--color-accent), black 10%);
+  background-color: color-mix(in srgb, var(--color-secondary), black 10%);
   color: white;
 }
 
 .btn-secondary:active:not(:disabled) {
-  background-color: color-mix(in srgb, var(--color-accent), black 15%);
+  background-color: color-mix(in srgb, var(--color-secondary), black 15%);
 }
 
 /* Outline Button */
@@ -441,32 +431,20 @@ a:hover {
   background-color: color-mix(in srgb, var(--color-primary) 12%, transparent);
 }
 
-/* Ghost Button */
-.btn-ghost {
-  background-color: transparent;
-  color: var(--color-text-high);
-}
-
-.btn-ghost:hover:not(:disabled) {
-  background-color: color-mix(in srgb, var(--color-primary) 8%, transparent);
-}
-
-.btn-ghost:active:not(:disabled) {
-  background-color: color-mix(in srgb, var(--color-primary) 12%, transparent);
-}
+/* (Removed) Ghost Button per current spec preference */
 
 /* Destructive Button */
 .btn-danger {
-  background-color: var(--color-danger, var(--bold-red));
+  background-color: var(--color-error);
   color: white;
 }
 
 .btn-danger:hover:not(:disabled) {
-  background-color: color-mix(in srgb, var(--color-danger, var(--bold-red)), black 10%);
+  background-color: color-mix(in srgb, var(--color-error), black 10%);
 }
 
 .btn-danger:active:not(:disabled) {
-  background-color: color-mix(in srgb, var(--color-danger, var(--bold-red)), black 15%);
+  background-color: color-mix(in srgb, var(--color-error), black 15%);
 }
 
 /* Icon Button (Ghost by default) */
@@ -594,7 +572,7 @@ a:hover {
   height: 16px;
   transform: translateY(-50%);
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M7 10l5 5 5-5' stroke='%238A94A6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M7 10l5 5 5-5' stroke='%234B5563' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-size: 16px 16px;
 }
@@ -822,7 +800,7 @@ a:hover {
   appearance: none;
   cursor: pointer;
   padding-right: calc(var(--touch-target) + var(--space-xs));
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M7 10l5 5 5-5' stroke='%238A94A6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M7 10l5 5 5-5' stroke='%234B5563' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right var(--space-sm) center;
   background-size: 16px 16px;

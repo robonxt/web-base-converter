@@ -14,6 +14,7 @@
         el.removeAttribute('hidden');
         requestAnimationFrame(() => {
             el.classList.add('show');
+            setThemeColorMeta();
         });
         window.clearTimeout(el._hideTimer);
         el._hideTimer = window.setTimeout(() => {
@@ -53,9 +54,27 @@
 
     // Theme management
     const THEME_KEY = 'theme';
+
+    // Keep the browser UI color in sync with our themed header color
+    const setThemeColorMeta = () => {
+        try {
+            let meta = document.querySelector('meta[name="theme-color"]');
+            if (!meta) {
+                meta = document.createElement('meta');
+                meta.setAttribute('name', 'theme-color');
+                document.head.appendChild(meta);
+            }
+            const cs = getComputedStyle(document.documentElement);
+            const headerColor = (cs.getPropertyValue('--color-header') || '').trim() || '#14B8A6';
+            meta.setAttribute('content', headerColor);
+        } catch { /* noop */ }
+    };
+
     const setTheme = (next) => {
         attr(document.documentElement, 'data-theme', next);
         try { localStorage.setItem(THEME_KEY, next); } catch { /* ignore */ }
+        // Update theme-color after the DOM applies the new theme variables
+        requestAnimationFrame(setThemeColorMeta);
     };
 
     // Modal dialog functionality
