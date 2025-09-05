@@ -3,9 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, orientation=portrait, maximum-scale=1.0, user-scalable=no">
+    <meta name="screen-orientation" content="portrait">
     <title>Base Converter</title>
-    <meta name="description" content="Effortlessly convert numerical values between binary, octal, decimal, and hexadecimal bases.">
+    <meta name="description"
+        content="Effortlessly convert numerical values between binary, octal, decimal, and hexadecimal bases.">
     <meta name="theme-color" content="#14B8A6">
     <!-- Brand Icons (removed file-based links; consider adding data URL or real assets later) -->
     <!-- Fonts -->
@@ -84,7 +87,8 @@
                             </select>
                         </div>
 
-                        <button type="button" id="swap-bases" class="btn btn-icon btn-outline swap-btn" aria-label="Swap bases" title="Swap bases">
+                        <button type="button" id="swap-bases" class="btn btn-icon btn-outline swap-btn"
+                            aria-label="Swap bases" title="Swap bases">
                             <span class="material-symbols-rounded">swap_horiz</span>
                         </button>
 
@@ -106,8 +110,8 @@
                 <h3>Conversion Output</h3>
                 <div class="result-row">
                     <div id="solution" class="result" aria-live="polite"></div>
-                    <button type="button" id="copy-solution" class="btn btn-icon btn-outline" aria-label="Copy result to clipboard"
-                        title="Copy to clipboard">
+                    <button type="button" id="copy-solution" class="btn btn-icon btn-outline"
+                        aria-label="Copy result to clipboard" title="Copy to clipboard">
                         <span class="material-symbols-rounded">content_copy</span>
                     </button>
                 </div>
@@ -161,25 +165,29 @@
             <div class="modal-content" id="content-info">
                 <h3>Base Converter Tool</h3>
 
-                <p>Effortlessly convert numerical values between binary, octal, decimal, and hexadecimal bases. Enter a value, select bases, and get instant results.</p>
+                <p>Effortlessly convert numerical values between binary, octal, decimal, and hexadecimal bases. Enter a
+                    value, select bases, and get instant results.</p>
 
                 <ul>
-                    <li><strong>Set Bases:</strong> Choose <em>From</em> and <em>To</em> (2, 8, 10, 16). Use <em>Swap</em> to flip.</li>
+                    <li><strong>Set Bases:</strong> Choose <em>From</em> and <em>To</em> (2, 8, 10, 16). Use
+                        <em>Swap</em> to flip.</li>
                     <li><strong>Enter Value:</strong> Only digits valid for the <em>From</em> base are accepted.</li>
-                    <li><strong>Features:</strong> Live result, one-click copy, step-by-step method, light/dark theme, PWA offline.</li>
+                    <li><strong>Features:</strong> Live result, one-click copy, step-by-step method, light/dark theme,
+                        PWA offline.</li>
                     <li><strong>Validation:</strong> Invalid characters are flagged immediately.</li>
                     <li><strong>Result:</strong> Exact conversion plus the method used.</li>
                     <li><strong>Digits:</strong> Bin 0–1 · Oct 0–7 · Dec 0–9 · Hex 0–9, A–F.</li>
                 </ul>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-outline" href="https://github.com/robonxt/web-base-converter" target="_blank" rel="noopener">View source code on GitHub</a>
+                <a class="btn btn-outline" href="https://github.com/robonxt/web-base-converter" target="_blank"
+                    rel="noopener">View source code on GitHub</a>
             </div>
         </div>
     </div>
 
-    <div class="overlay" id="modal-update-confirm" role="dialog" aria-modal="true" aria-labelledby="heading-update-confirm"
-        aria-hidden="true">
+    <div class="overlay" id="modal-update-confirm" role="dialog" aria-modal="true"
+        aria-labelledby="heading-update-confirm" aria-hidden="true">
         <div class="modal-dialog" tabindex="-1">
             <div class="modal-header">
                 <h2 id="heading-update-confirm" class="modal-title">Confirm Update</h2>
