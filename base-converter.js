@@ -2,11 +2,10 @@
   'use strict';
 
   /**
-   * Validate that a given input string is valid for a specific base.
-   * Supports bases 2, 8, 10, 16.
-   * @param {string} input
-   * @param {number} base
-   * @returns {boolean}
+   * Validates if input string is valid for the specified base (2, 8, 10, 16)
+   * @param {string} input - The input string to validate
+   * @param {number} base - The numeric base to validate against (2, 8, 10, 16)
+   * @returns {boolean} True if input is valid for the specified base
    */
   function isValidForBase(input, base) {
     if (typeof input !== 'string' || !input.trim()) return false;
@@ -26,11 +25,11 @@
   }
 
   /**
-   * Convert an input string from a given base to a decimal number.
-   * @param {string} input
-   * @param {number} fromBase
-   * @returns {number}
-   * @throws {Error} if input is invalid for the base
+   * Converts input string from specified base to decimal number
+   * @param {string} input - The number string to convert
+   * @param {number} fromBase - The base of the input number (2, 8, 10, 16)
+   * @returns {number} The decimal equivalent of the input
+   * @throws {Error} If input is invalid or base is unsupported
    */
   function toDecimal(input, fromBase) {
     if (![2, 8, 10, 16].includes(fromBase)) {
@@ -48,12 +47,12 @@
   }
 
   /**
-   * Convert an input string from one base to another and return the string result.
-   * For non-decimal targets, output is uppercase (e.g., hex digits).
-   * @param {string} input
-   * @param {number} fromBase
-   * @param {number} toBase
-   * @returns {string}
+   * Converts a number string between different bases (2, 8, 10, 16)
+   * @param {string} input - The number string to convert
+   * @param {number} fromBase - Source base (2, 8, 10, 16)
+   * @param {number} toBase - Target base (2, 8, 10, 16)
+   * @returns {string} The converted number string in uppercase for bases > 10
+   * @throws {Error} For unsupported bases
    */
   function convert(input, fromBase, toBase) {
     const dec = toDecimal(input, fromBase);
@@ -66,7 +65,7 @@
     return dec.toString(toBase).toUpperCase();
   }
 
-  // Expose a minimal API with no UI concerns
+  // Public API
   global.BaseConverter = {
     convert,
     toDecimal,

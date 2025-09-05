@@ -51,8 +51,6 @@
                 <nav class="tab-list" id="wrapper-tabs">
                     <div class="tab-slider"></div>
                     <button class="tab-button active" data-tab="home">Home</button>
-                    <button class="tab-button" data-tab="about">About</button>
-                    <button class="tab-button" data-tab="contact">Contact</button>
                 </nav>
             </div>
 
@@ -83,28 +81,34 @@
                         <label for="inputValue">Value</label>
                         <input type="text" id="inputValue" placeholder="e.g., 101101 or 2F" required />
                     </div>
-                    <div class="input-group">
-                        <label for="fromBase">From</label>
-                        <select id="fromBase">
-                            <option value="2">Binary</option>
-                            <option value="8">Octal</option>
-                            <option value="10">Decimal</option>
-                            <option value="16">Hexadecimal</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label for="toBase">To</label>
-                        <select id="toBase">
-                            <option value="2">Binary</option>
-                            <option value="8">Octal</option>
-                            <option value="10" selected>Decimal</option>
-                            <option value="16">Hexadecimal</option>
-                        </select>
+
+                    <div class="bases-row">
+                        <div class="input-group base-select">
+                            <label for="fromBase">From</label>
+                            <select id="fromBase" class="enhance-dropdown">
+                                <option value="2">Binary</option>
+                                <option value="8">Octal</option>
+                                <option value="10">Decimal</option>
+                                <option value="16">Hexadecimal</option>
+                            </select>
+                        </div>
+
+                        <button type="button" id="swap-bases" class="btn btn-icon swap-btn" aria-label="Swap bases" title="Swap bases">
+                            <span class="material-symbols-rounded">swap_horiz</span>
+                        </button>
+
+                        <div class="input-group base-select">
+                            <label for="toBase">To</label>
+                            <select id="toBase" class="enhance-dropdown">
+                                <option value="2">Binary</option>
+                                <option value="8">Octal</option>
+                                <option value="10" selected>Decimal</option>
+                                <option value="16">Hexadecimal</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div class="actions">
-                    <button type="submit" class="btn btn-primary">Convert</button>
-                </div>
+
             </form>
 
             <div class="solution-block">

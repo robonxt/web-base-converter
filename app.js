@@ -1,32 +1,30 @@
 (function () {
-    // Utils
+    // DOM utilities
     const qs = (sel, root = document) => root.querySelector(sel);
     const qsa = (sel, root = document) => Array.from(root.querySelectorAll(sel));
     const on = (el, type, handler, opts) => el && el.addEventListener(type, handler, opts);
     const attr = (el, name, value) => (value === undefined ? el.getAttribute(name) : el.setAttribute(name, value));
 
-    // Toast helper (non-blocking, accessible)
+    // Toast notification helper
     function showToast(message, type = 'info', duration = 2400) {
         const el = qs('#toast');
         if (!el) return;
         el.textContent = message;
         el.className = `toast ${type}`;
         el.removeAttribute('hidden');
-        // next frame to allow transition
         requestAnimationFrame(() => {
             el.classList.add('show');
         });
         window.clearTimeout(el._hideTimer);
         el._hideTimer = window.setTimeout(() => {
             el.classList.remove('show');
-            // hide after transition
             setTimeout(() => {
                 el.setAttribute('hidden', '');
             }, 300);
         }, duration);
     }
 
-    // Service Worker
+    // Service Worker registration
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker
@@ -53,14 +51,14 @@
         });
     }
 
-    // Theme
+    // Theme management
     const THEME_KEY = 'theme';
     const setTheme = (next) => {
         attr(document.documentElement, 'data-theme', next);
         try { localStorage.setItem(THEME_KEY, next); } catch { /* ignore */ }
     };
 
-    // Modal
+    // Modal dialog functionality
     function bindModal(triggerBtn, modalEl, closeBtn) {
         if (!modalEl) return;
         const dialog = modalEl.querySelector('.modal-dialog');
@@ -106,7 +104,7 @@
         on(modalEl, 'click', (e) => { if (e.target === modalEl) close(); });
     }
 
-    // Converter: helper data and functions (UI only, logic in base-converter.js)
+    // Conversion information and UI helpers
     const conversionInfo = {
         '2-8': 'Binary to Octal:\nGroup binary digits into sets of 3 (from right) and convert each group to octal.\nExample: 101011\nGroup into threes: 101 011\n101 = 5, 011 = 3\nResult: 53',
         '2-10': 'Binary to Decimal:\nMultiply each binary digit by 2 raised to its position power (from right, starting at 0) and sum.\nExample: 1011\n1×2³ + 0×2² + 1×2¹ + 1×2⁰\n8 + 0 + 2 + 1 = 11',
@@ -222,8 +220,6 @@
             link.className = 'mobile-nav-link';
             const iconMap = {
                 home: 'home',
-                about: 'info',
-                contact: 'mail'
             };
             const iconName = iconMap[tabName] || 'chevron_right';
             const icon = document.createElement('span');
@@ -343,6 +339,130 @@
         syncActiveState();
     }
 
+    // Enhance native <select> to custom dropdown matching mobile nav
+    function enhanceSelect(nativeSelect) {
+        if (!nativeSelect) return null;
+        if (nativeSelect._enhanced) return nativeSelect._enhanced; // idempotent
+
+        // Build structure: wrapper, trigger, dropdown
+        const wrapper = document.createElement('div');
+        wrapper.className = 'select-container';
+
+        const trigger = document.createElement('button');
+        trigger.type = 'button';
+        trigger.className = 'select-trigger';
+        trigger.setAttribute('aria-haspopup', 'listbox');
+        trigger.setAttribute('aria-expanded', 'false');
+        const updateTriggerLabel = () => {
+            const selOpt = nativeSelect.options[nativeSelect.selectedIndex];
+            trigger.textContent = selOpt ? selOpt.textContent : '';
+        };
+        updateTriggerLabel();
+
+        const dropdown = document.createElement('div');
+        dropdown.className = 'mobile-nav-dropdown select-dropdown';
+        dropdown.setAttribute('role', 'listbox');
+        const ddId = `${nativeSelect.id || 'select'}-dropdown`;
+        dropdown.id = ddId;
+        trigger.setAttribute('aria-controls', ddId);
+
+        // Build options
+        const buildOptions = () => {
+            dropdown.innerHTML = '';
+            Array.from(nativeSelect.options).forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'mobile-nav-link';
+                btn.type = 'button';
+                btn.setAttribute('role', 'option');
+                btn.setAttribute('data-value', opt.value);
+                btn.textContent = opt.textContent;
+                if (idx === nativeSelect.selectedIndex) btn.classList.add('active');
+                on(btn, 'click', () => {
+                    nativeSelect.value = opt.value;
+                    nativeSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                    updateTriggerLabel();
+                    closeDropdown();
+                    syncActive();
+                    trigger.focus();
+                });
+                dropdown.appendChild(btn);
+            });
+        };
+        buildOptions();
+
+        // Insert DOM: replace native select visually but keep it for form semantics
+        nativeSelect.parentNode.insertBefore(wrapper, nativeSelect);
+        wrapper.appendChild(nativeSelect);
+        wrapper.appendChild(trigger);
+        wrapper.appendChild(dropdown);
+
+        nativeSelect.classList.add('visually-hidden-select');
+
+        // Open/close behavior
+        const openDropdown = () => {
+            if (dropdown.classList.contains('is-visible')) return;
+            dropdown.classList.add('is-visible');
+            trigger.setAttribute('aria-expanded', 'true');
+            // Focus first or active item
+            const items = Array.from(dropdown.querySelectorAll('.mobile-nav-link'));
+            const activeIdx = items.findIndex(el => el.classList.contains('active'));
+            const focusIdx = activeIdx >= 0 ? activeIdx : 0;
+            items[focusIdx]?.focus();
+        };
+        const closeDropdown = () => {
+            if (!dropdown.classList.contains('is-visible')) return;
+            dropdown.classList.remove('is-visible');
+            trigger.setAttribute('aria-expanded', 'false');
+        };
+
+        on(trigger, 'click', (e) => {
+            e.stopPropagation();
+            dropdown.classList.contains('is-visible') ? closeDropdown() : openDropdown();
+        });
+
+        on(document, 'click', (e) => {
+            if (!wrapper.contains(e.target)) closeDropdown();
+        });
+
+        on(wrapper, 'keydown', (e) => {
+            const items = Array.from(dropdown.querySelectorAll('.mobile-nav-link'));
+            const currentIndex = items.indexOf(document.activeElement);
+            if (e.key === 'Escape') { e.preventDefault(); closeDropdown(); trigger.focus(); }
+            else if ((e.key === 'Enter' || e.key === ' ') && document.activeElement === trigger) {
+                e.preventDefault(); openDropdown();
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (!dropdown.classList.contains('is-visible')) { openDropdown(); return; }
+                const next = currentIndex < 0 ? 0 : (currentIndex + 1) % items.length;
+                items[next]?.focus();
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (!dropdown.classList.contains('is-visible')) { openDropdown(); return; }
+                const prev = currentIndex < 0 ? items.length - 1 : (currentIndex - 1 + items.length) % items.length;
+                items[prev]?.focus();
+            } else if ((e.key === 'Enter' || e.key === ' ') && document.activeElement && items.includes(document.activeElement)) {
+                e.preventDefault();
+                document.activeElement.click();
+            }
+        });
+
+        // Sync active class with select value
+        const syncActive = () => {
+            const val = nativeSelect.value;
+            dropdown.querySelectorAll('.mobile-nav-link').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-value') === val);
+            });
+        };
+
+        on(nativeSelect, 'change', () => {
+            updateTriggerLabel();
+            syncActive();
+        });
+
+        nativeSelect._enhanced = { wrapper, trigger, dropdown, rebuild: buildOptions };
+        return nativeSelect._enhanced;
+    }
+
     // Init
     function initUI() {
         initTabs();
@@ -362,13 +482,26 @@
         const toEl = qs('#toBase');
         const resultEl = qs('#solution');
         const copyBtn = qs('#copy-solution');
+        const swapBtn = qs('#swap-bases');
 
         if (form && inputEl && fromEl && toEl && resultEl) {
-            on(form, 'submit', (e) => {
-                e.preventDefault();
+            // Enhance dropdowns to match mobile nav style
+            if (fromEl.classList.contains('enhance-dropdown')) enhanceSelect(fromEl);
+            if (toEl.classList.contains('enhance-dropdown')) enhanceSelect(toEl);
+            // Prevent form submission (e.g., Enter key) from reloading the page
+            on(form, 'submit', (e) => { e.preventDefault(); });
+
+            const performConversion = () => {
                 const inputValue = inputEl.value.trim();
                 const fromBase = parseInt(fromEl.value, 10);
                 const toBase = parseInt(toEl.value, 10);
+
+                if (!inputValue) {
+                    resultEl.textContent = '';
+                    updateInfo(fromBase, toBase);
+                    return;
+                }
+
                 try {
                     const value = BaseConverter.convert(inputValue, fromBase, toBase);
                     resultEl.textContent = value;
@@ -376,12 +509,27 @@
                     resultEl.textContent = 'Invalid input for selected base';
                 }
                 updateInfo(fromBase, toBase);
-            });
+            };
 
-            on(fromEl, 'change', () => updateInfo(parseInt(fromEl.value, 10), parseInt(toEl.value, 10)));
-            on(toEl, 'change', () => updateInfo(parseInt(fromEl.value, 10), parseInt(toEl.value, 10)));
-            // Initial info
-            updateInfo(parseInt(fromEl.value, 10), parseInt(toEl.value, 10));
+            // Live conversion on input and base changes
+            on(inputEl, 'input', performConversion);
+            on(fromEl, 'change', performConversion);
+            on(toEl, 'change', performConversion);
+
+            // Initial compute to populate info and result
+            performConversion();
+        }
+
+        // Swap button: exchange selected bases and trigger conversion
+        if (swapBtn && fromEl && toEl) {
+            on(swapBtn, 'click', () => {
+                const tmp = fromEl.value;
+                fromEl.value = toEl.value;
+                toEl.value = tmp;
+                // Notify enhanced selects and trigger conversion
+                fromEl.dispatchEvent(new Event('change', { bubbles: true }));
+                toEl.dispatchEvent(new Event('change', { bubbles: true }));
+            });
         }
 
         // Temporary success icon swap for copy button
