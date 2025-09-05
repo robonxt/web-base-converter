@@ -372,21 +372,6 @@ a:hover {
     background-color: color-mix(in srgb, var(--color-primary), black 15%);
 }
 
-/* Secondary/Accent Button */
-.btn-secondary {
-    background-color: var(--color-accent);
-    color: white;
-}
-
-.btn-secondary:hover {
-    background-color: color-mix(in srgb, var(--color-accent), black 10%);
-    color: white;
-}
-
-.btn-secondary:active:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-accent), black 15%);
-}
-
 /* Outline Button */
 .btn-outline {
     background-color: transparent;
@@ -681,12 +666,6 @@ a:hover {
     padding: var(--space-sm);
     max-height: min(70vh, 640px);
     overflow: auto;
-}
-
-.menu-divider {
-    height: var(--stroke-sm);
-    margin: var(--space-2xs) 0;
-    background-color: var(--color-border-default);
 }
 
 [data-theme='light'] .icon-theme-dark,

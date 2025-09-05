@@ -178,8 +178,46 @@
                 </button>
             </div>
             <div class="modal-content" id="content-info">
-                <p>Reusable web template with header, tabs, modals, and PWA offline support.</p>
-                <p>Edit this content to document your site. Include quick tips or links.</p>
+                <h3>Overview</h3>
+                <p>This tool converts numbers between bases 2 (Binary), 8 (Octal), 10 (Decimal), and 16 (Hexadecimal). It updates results as you type and explains the conversion method for the selected bases.</p>
+
+                <h3>How to Use</h3>
+                <ul>
+                    <li>Enter a value in the <strong>Value</strong> field.</li>
+                    <li>Select the <strong>From</strong> base and the <strong>To</strong> base. Use the <strong>Swap</strong> button to quickly switch them.</li>
+                    <li>The result appears instantly in the <strong>Result</strong> area. Use the copy icon to copy it.</li>
+                    <li>Below the result, find a brief explanation of the conversion method for the chosen bases.</li>
+                </ul>
+
+                <h3>Supported Bases & Validation</h3>
+                <ul>
+                    <li><strong>Binary (2)</strong>: digits 0–1</li>
+                    <li><strong>Octal (8)</strong>: digits 0–7</li>
+                    <li><strong>Decimal (10)</strong>: digits 0–9</li>
+                    <li><strong>Hexadecimal (16)</strong>: digits 0–9 and A–F (case-insensitive)</li>
+                </ul>
+                <p>If the input contains characters invalid for the selected base, an error message is shown in the result area.</p>
+
+                <h3>Tips & Keyboard</h3>
+                <ul>
+                    <li>Hex input is case-insensitive: <code>a–f</code> equals <code>A–F</code>.</li>
+                    <li>Press <strong>Tab</strong> to move between inputs and dropdowns. Press <strong>Enter</strong> or <strong>Space</strong> to open custom dropdowns, then use arrow keys to navigate.</li>
+                    <li>The app keeps your theme preference and works offline once loaded.</li>
+                </ul>
+
+                <h3>Offline, Updates, and Privacy</h3>
+                <ul>
+                    <li><strong>Offline</strong>: The PWA caches assets so the tool works without a network after first load.</li>
+                    <li><strong>Updates</strong>: Use <strong>Settings → Update</strong> to refresh cached assets. This may clear preferences.</li>
+                    <li><strong>Privacy</strong>: All conversions run locally in your browser—no data is sent to a server.</li>
+                </ul>
+
+                <h3>Version & Links</h3>
+                <ul>
+                    <li>Version: 1.0.0</li>
+                    <li>Branding and components: <a href="https://raw.githubusercontent.com/robonxt/robonxt-visual-branding-guidelines/refs/heads/main/index.html" target="_blank" rel="noopener">Brand Guidelines</a></li>
+                    <li>Design tokens: <a href="https://raw.githubusercontent.com/robonxt/robonxt-visual-branding-guidelines/refs/heads/main/tokens.json" target="_blank" rel="noopener">tokens.json</a></li>
+                </ul>
             </div>
         </div>
     </div>
