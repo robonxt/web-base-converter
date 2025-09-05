@@ -1,8 +1,7 @@
 ---
-trigger: always_on
+trigger: manual
 ---
 
 This is a webapp tool.
 
 Thus, this webapp must build upon the robonxt web tool template as found in this github repo: https://github.com/robonxt/web-tools-template
-
