@@ -245,7 +245,6 @@ a:hover {
     border-color var(--duration-medium) var(--ease-standard),
     box-shadow var(--duration-medium) var(--ease-standard);
   position: relative;
-  overflow: hidden;
 }
 /* Ensure strong contrast for content inside the colored header */
 .header-bar-content h1,
