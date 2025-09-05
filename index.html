@@ -2,114 +2,185 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, orientation=portrait, maximum-scale=1.0, user-scalable=no">
-  <meta name="screen-orientation" content="portrait">
-  <meta name="x5-orientation" content="portrait">
-  <title>Base Converter</title>
-  <meta name="description"
-    content="A lightweight, dependency-free Base Converter PWA for converting between number systems (Binary, Octal, Decimal, Hexadecimal). Works offline and includes light/dark themes for enhanced usability.">
-  <meta property="og:title" content="Base Converter">
-  <meta property="og:description"
-    content="A lightweight, dependency-free Base Converter PWA for converting between number systems (Binary, Octal, Decimal, Hexadecimal). Works offline and includes light/dark themes for enhanced usability.">
-  <meta property="og:type" content="website">
-  <!-- <meta property="og:image" content="https://kmap.robonxt.xyz/assets/logo/base-converter-logo-v1.jpeg"> -->
-  <!-- <meta property="og:url" content="https://kmap.robonxt.xyz"> -->
-  <!-- <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico"> -->
-  <!-- <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" /> -->
-  <!-- <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/android-chrome-192.png"> -->
-  <!-- <link rel="icon" type="image/png" sizes="512x512" href="assets/icons/android-chrome-512.png"> -->
-  <!-- <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png"> -->
-  <!-- <meta name="msapplication-TileImage" content="assets/icons/mstile.png"> -->
-  <!-- <meta name="msapplication-TileColor" content="#ffffff"> -->
-  <meta name="theme-color" content="#ffffff">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Template Starter</title>
+    <meta name="description" content="Reusable header/toolbar/tabs starter with PWA support.">
+    <meta name="theme-color" content="#14B8A6">
+    <!-- Brand Icons -->
+    <link rel="icon" type="image/x-icon" href="assets/icon/sample-favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icon/sample-favicon.svg" />
+    <link rel="apple-touch-icon" href="assets/icon/sample-apple-touch-icon.png">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="manifest" href="manifest.json">
+    <script>
+        // Apply saved or preferred theme before first paint to avoid flash
+        (function () {
+            try {
+                var saved = localStorage.getItem('theme');
+                var theme = saved ? saved : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-  <div class="container">
-    <div class="header-container">
-      <div class="header-title">Base Converter</div>
-      <div class="header-controls">
-        <button class="svg-button" id="theme-toggle" aria-label="Toggle theme">
-          <svg class="light-theme-icon" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2" />
-            <path
-              d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
-          </svg>
-          <svg class="dark-theme-icon" viewBox="0 0 24 24">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </button>
-        <button class="svg-button" id="info-btn" aria-label="Show Information">
-          <svg viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" />
-            <circle cx="12" cy="8" r="1" fill="currentColor" />
-            <path d="M12 11v7" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-          </svg>
-        </button>
-      </div>
-    </div>
 
-    <div class="input-container">
-      <form id="converter-form">
-        <div class="input-group">
-          <label for="inputValue">Enter Value:</label>
-          <input type="text" id="inputValue" required>
+    <header class="header-bar">
+        <div class="header-bar-content">
+            <div class="header-left">
+                <div class="mobile-nav">
+                    <button class="btn btn-icon" id="btn-mobile-nav" aria-label="Open Menu" aria-haspopup="true"
+                        aria-expanded="false">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <use href="assets/icon/icon-menu.svg#icon-menu" />
+                        </svg>
+                    </button>
+                    <div class="mobile-nav-dropdown" id="mobile-nav-dropdown" role="menu"></div>
+                </div>
+                <div class="mobile-nav-title" id="mobile-nav-title"></div>
+                <nav class="tab-list" id="wrapper-tabs">
+                    <div class="tab-slider"></div>
+                    <button class="tab-button active" data-tab="home">Home</button>
+                    <button class="tab-button" data-tab="about">About</button>
+                    <button class="tab-button" data-tab="contact">Contact</button>
+                </nav>
+            </div>
+
+            <div class="header-controls">
+                <button class="btn btn-icon" id="btn-show-settings" aria-label="Show Settings" title="Settings">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <use href="assets/icon/icon-settings.svg#icon-settings" />
+                    </svg>
+                </button>
+                <button class="btn btn-icon" id="btn-show-info" aria-label="Show Information" title="Info">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <use href="assets/icon/icon-info.svg#icon-info" />
+                    </svg>
+                </button>
+            </div>
         </div>
-        <div class="dropdown-container">
-          <div class="input-group">
-            <label for="fromBase">From Base:</label>
-            <select id="fromBase">
-              <option value="2">Binary</option>
-              <option value="8">Octal</option>
-              <option value="10">Decimal</option>
-              <option value="16">Hexadecimal</option>
-            </select>
-          </div>
-          <span class="arrow">→</span>
-          <div class="input-group">
-            <label for="toBase">To Base:</label>
-            <select id="toBase">
-              <option value="2">Binary</option>
-              <option value="8">Octal</option>
-              <option value="10">Decimal</option>
-              <option value="16">Hexadecimal</option>
-            </select>
-          </div>
+    </header>
+
+    <main class="app-container">
+
+        <section class="content-section" data-content="home">
+            <h2>Number Base Converter</h2>
+            <p>Convert values between bases 2, 8, 10, and 16.</p>
+
+            <form id="converter-form" class="tool-form" autocomplete="off">
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="inputValue">Value</label>
+                        <input type="text" id="inputValue" placeholder="e.g., 101101 or 2F" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="fromBase">From</label>
+                        <select id="fromBase">
+                            <option value="2">Binary</option>
+                            <option value="8">Octal</option>
+                            <option value="10">Decimal</option>
+                            <option value="16">Hexadecimal</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="toBase">To</label>
+                        <select id="toBase">
+                            <option value="2">Binary</option>
+                            <option value="8">Octal</option>
+                            <option value="10" selected>Decimal</option>
+                            <option value="16">Hexadecimal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button type="submit" class="btn btn-primary">Convert</button>
+                </div>
+            </form>
+
+            <div class="solution-block">
+                <h3>Result</h3>
+                <div class="result-row">
+                    <div id="solution" class="result" aria-live="polite"></div>
+                    <button type="button" id="copy-solution" class="btn btn-icon" aria-label="Copy result to clipboard" title="Copy to clipboard">
+                        <span class="material-symbols-rounded">content_copy</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="conversion-container">
+                <h3>Conversion Method</h3>
+                <div id="conversionSteps"></div>
+            </div>
+        </section>
+        <section class="content-section" data-content="about" hidden>About content.</section>
+        <section class="content-section" data-content="contact" hidden>Contact content.</section>
+    </main>
+
+    <div class="overlay" id="modal-settings" role="dialog" aria-modal="true" aria-labelledby="heading-settings"
+        aria-hidden="true">
+        <div class="modal-dialog" tabindex="-1">
+            <div class="modal-header">
+                <h2 id="heading-settings" class="modal-title">Settings</h2>
+                <button class="btn btn-icon btn-modal-close" id="btn-modal-close-settings" aria-label="Close">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <use href="assets/icon/icon-close.svg#icon-close" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-content" id="content-settings">
+                <div class="settings-grid">
+                    <button id="btn-toggle-theme" class="btn btn-outline" title="Toggle Theme"
+                        aria-label="Toggle Theme">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="icon-theme-light">
+                            <use href="assets/icon/icon-sun.svg#icon-sun" />
+                        </svg>
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="icon-theme-dark">
+                            <use href="assets/icon/icon-moon.svg#icon-moon" />
+                        </svg>
+                        Toggle Theme
+                    </button>
+                    <button id="btn-update-app" class="btn btn-danger" title="Install Updates"
+                        aria-label="Install Updates">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <use href="assets/icon/icon-refresh.svg#icon-refresh" />
+                        </svg>
+                        Update
+                    </button>
+                </div>
+            </div>
         </div>
-        <button type="submit">Convert</button>
-      </form>
     </div>
 
-    <div class="solution-container">
-      <div class="solution-title">Answer</div>
-      <div class="solution-toolbar">
-        <div class="solution result-text"></div>
-        <button id="copy-solution" class="copy-btn svg-button" title="Copy to clipboard">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-          </svg>
-        </button>
-      </div>
+    <div class="overlay" id="modal-info" role="dialog" aria-modal="true" aria-labelledby="heading-info"
+        aria-hidden="true">
+        <div class="modal-dialog" tabindex="-1">
+            <div class="modal-header">
+                <h2 id="heading-info" class="modal-title">About this Template</h2>
+                <button class="btn btn-icon btn-modal-close" id="btn-modal-close-info" aria-label="Close">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <use href="assets/icon/icon-close.svg#icon-close" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-content" id="content-info">
+                <p>Reusable web template with header, tabs, modals, and PWA offline support.</p>
+                <p>Edit this content to document your site. Include quick tips or links.</p>
+            </div>
+        </div>
+    </div>
 
-    </div>
-    <div class="conversion-container">
-      <div class="conversion-title">Conversion Method</div>
-      <div id="conversionSteps"></div>
-    </div>
-  </div>
-  <div id="toast" class="toast">Copied to clipboard!</div>
-  <script src="app.js"></script>
+    <script src="base-converter.js" defer></script>
+    <script src="app.js" defer></script>
 </body>
 
 </html>

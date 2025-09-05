@@ -1,82 +1,69 @@
-const CACHE = 'base-converter-cache';
+const CACHE = 'site-cache';
 const ASSETS = [
   '.',
-  './assets/icons/android-chrome-192.png',
-  './assets/icons/android-chrome-512.png',
-  './assets/icons/apple-touch-icon.png',
-  './assets/icons/favicon.ico',
-  './assets/icons/favicon.svg',
-  './assets/icons/mstile.png',
   './index.html',
-  './app.js',
-  './manifest.json',
-  './pwa-check.html',
   './styles.css',
-  './sw.js'
+  './app.js',
+  './base-converter.js',
+  './manifest.json',
+  './sw.js',
+  './assets/icon/sample-android-chrome-192.png',
+  './assets/icon/sample-android-chrome-512.png',
+  './assets/icon/sample-apple-touch-icon.png',
+  './assets/icon/sample-favicon.ico',
+  './assets/icon/sample-favicon.svg',
+  './assets/icon/sample-mstile.png',
+  './assets/icon/icon-menu.svg',
+  './assets/icon/icon-info.svg',
+  './assets/icon/icon-settings.svg',
+  './assets/icon/icon-refresh.svg',
+  './assets/icon/icon-close.svg',
+  './assets/icon/icon-sun.svg',
+  './assets/icon/icon-moon.svg'
 ];
 
-// Service Worker Lifecycle Events
-// ------------------------------
-// 1. install: Caches all static assets for offline use
+// Install: precache assets (ignore individual failures)
 self.addEventListener('install', e => {
-  self.skipWaiting(); // Force activation without waiting
-  e.waitUntil(caches.open(CACHE).then(c => Promise.all(ASSETS.map(a => c.add(new Request(a))))));
-});
-
-// 2. activate: Cleans up old caches and claims clients
-self.addEventListener('activate', e => {
+  self.skipWaiting();
   e.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    }).then(() => clients.claim()) // Take control of all clients
+    caches.open(CACHE).then(c =>
+      Promise.all(ASSETS.map(a => c.add(new Request(a)).catch(() => undefined)))
+    )
   );
 });
 
-// 3. fetch: Implements cache-first strategy with network update
+// Activate: drop old caches and take control
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys().then(names => Promise.all(names.map(n => (n !== CACHE ? caches.delete(n) : undefined))))
+      .then(() => clients.claim())
+  );
+});
+
+// Fetch: navigations -> index.html (offline); others -> cache-first with background update
 self.addEventListener('fetch', e => {
-  // Skip non-GET requests and non-HTTP/HTTPS URLs
-  if (e.request.method !== 'GET' || !['http:', 'https:'].includes(new URL(e.request.url).protocol)) return;
-  
+  const url = new URL(e.request.url);
+  if (e.request.method !== 'GET' || !['http:', 'https:'].includes(url.protocol)) return;
+
+  if (e.request.mode === 'navigate') {
+    e.respondWith(
+      caches.match('./index.html').then(cached => fetch(e.request).catch(() => cached || caches.match('index.html')))
+    );
+    return;
+  }
+
   e.respondWith(
     caches.match(e.request).then(cached => {
-      // Try network and update cache in background
-      const networked = fetch(e.request, {cache: 'no-store'})
+      const networked = fetch(e.request, { cache: 'no-store' })
         .then(r => {
           if (r && r.status === 200) {
-            // Store fresh version in cache
-            const cacheClone = r.clone();
-            caches.open(CACHE).then(c => c.put(e.request, cacheClone));
-
-            // Check for content updates and notify clients if needed
-            if (cached) {
-              const compareClone = r.clone();
-              const cachedClone = cached.clone();
-              Promise.all([compareClone.text(), cachedClone.text()]).then(([newContent, cachedContent]) => {
-                if (newContent !== cachedContent && clients) {
-                  clients.matchAll().then(clients => {
-                    clients.forEach(client => {
-                      if (client.url.includes('pwa-check.html')) {
-                        client.postMessage({ 
-                          type: 'UPDATE_AVAILABLE',
-                          url: e.request.url
-                        });
-                      }
-                    });
-                  });
-                }
-              });
-            }
+            const rClone = r.clone();
+            caches.open(CACHE).then(c => c.put(e.request, rClone));
           }
           return r;
         })
-        .catch(() => cached); // Fallback to cache on network failure
-      return cached || networked; // Return cached response or network promise
+        .catch(() => cached);
+      return cached || networked;
     })
   );
 });

@@ -1,28 +1,45 @@
 {
-  "name": "Base Converter",
-  "short_name": "Base Conv",
-  "description": "Convert between number bases with ease",
-  "start_url": "./",
-  "display": "standalone",
-  "background_color": "#f5f5f5",
-  "theme_color": "#4CAF50",
-  "orientation": "portrait",
-  "icons": [
-    {
-      "src": "icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    },
-    {
-      "src": "icons/icon-maskable.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
-  ]
-}
+    "name": "Web Template Starter",
+    "short_name": "Template",
+    "description": "Reusable header/toolbar/tabs starter with PWA support.",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "display_override": ["standalone", "minimal-ui"],
+    "background_color": "#F5F7FA",
+    "theme_color": "#14B8A6",
+    "orientation": "portrait",
+    "icons": [
+      {
+        "src": "assets/icon/sample-favicon.ico",
+        "sizes": "64x64",
+        "type": "image/x-icon"
+      },
+      {
+        "src": "assets/icon/sample-android-chrome-192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "any maskable"
+      },
+      {
+        "src": "assets/icon/sample-android-chrome-512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "any maskable"
+      },
+      {
+        "src": "assets/icon/sample-apple-touch-icon.png",
+        "sizes": "180x180",
+        "type": "image/png",
+        "purpose": "any"
+      },
+      {
+        "src": "assets/icon/sample-mstile.png",
+        "sizes": "144x144",
+        "type": "image/png",
+        "purpose": "any"
+      }
+    ],
+    "categories": ["utilities", "productivity"],
+    "screenshots": [],
+    "shortcuts": []
+  }

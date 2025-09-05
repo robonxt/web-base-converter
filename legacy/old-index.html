@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, orientation=portrait, maximum-scale=1.0, user-scalable=no">
+  <meta name="screen-orientation" content="portrait">
+  <meta name="x5-orientation" content="portrait">
+  <title>Base Converter</title>
+  <meta name="description"
+    content="A lightweight, dependency-free Base Converter PWA for converting between number systems (Binary, Octal, Decimal, Hexadecimal). Works offline and includes light/dark themes for enhanced usability.">
+  <meta property="og:title" content="Base Converter">
+  <meta property="og:description"
+    content="A lightweight, dependency-free Base Converter PWA for converting between number systems (Binary, Octal, Decimal, Hexadecimal). Works offline and includes light/dark themes for enhanced usability.">
+  <meta property="og:type" content="website">
+  <!-- <meta property="og:image" content="https://kmap.robonxt.xyz/assets/logo/base-converter-logo-v1.jpeg"> -->
+  <!-- <meta property="og:url" content="https://kmap.robonxt.xyz"> -->
+  <!-- <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico"> -->
+  <!-- <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" /> -->
+  <!-- <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/android-chrome-192.png"> -->
+  <!-- <link rel="icon" type="image/png" sizes="512x512" href="assets/icons/android-chrome-512.png"> -->
+  <!-- <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png"> -->
+  <!-- <meta name="msapplication-TileImage" content="assets/icons/mstile.png"> -->
+  <!-- <meta name="msapplication-TileColor" content="#ffffff"> -->
+  <meta name="theme-color" content="#ffffff">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <!-- App Shell Header -->
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-mark">BN</div>
+      <div class="brand-text">
+        <div class="brand-title">Base Converter</div>
+        <div class="brand-subtitle">Robonxt Web Tool</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="info-btn" aria-label="About this tool" title="About">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" /><circle cx="12" cy="8" r="1" fill="currentColor" /><path d="M12 11v7" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+      </button>
+      <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme" title="Theme">
+        <svg class="light-theme-icon" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2" />
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+        </svg>
+        <svg class="dark-theme-icon" viewBox="0 0 24 24">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="app-main">
+    <section class="tool-card">
+      <h1 class="tool-title">Number Base Converter</h1>
+      <p class="tool-lead">Convert numbers between Binary, Octal, Decimal, and Hexadecimal.</p>
+
+      <form id="converter-form" class="tool-form">
+        <div class="grid">
+          <div class="input-group">
+            <label for="inputValue">Enter Value</label>
+            <input type="text" id="inputValue" placeholder="e.g., 101101 or 2F" required />
+          </div>
+          <div class="input-group">
+            <label for="fromBase">From Base</label>
+            <select id="fromBase">
+              <option value="2">Binary</option>
+              <option value="8">Octal</option>
+              <option value="10">Decimal</option>
+              <option value="16">Hexadecimal</option>
+            </select>
+          </div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div class="input-group">
+            <label for="toBase">To Base</label>
+            <select id="toBase">
+              <option value="2">Binary</option>
+              <option value="8">Octal</option>
+              <option value="10">Decimal</option>
+              <option value="16">Hexadecimal</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="primary-btn">Convert</button>
+      </form>
+
+      <div class="solution-container">
+        <div class="section-header">
+          <div class="solution-title">Answer</div>
+          <button id="copy-solution" class="icon-btn" title="Copy to clipboard">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
+          </button>
+        </div>
+        <div class="solution result-text"></div>
+      </div>
+
+      <div class="conversion-container">
+        <div class="conversion-title">Conversion Method</div>
+        <div id="conversionSteps"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div>Built with the Robonxt Web Tools Template</div>
+    <a href="https://github.com/robonxt/web-tools-template" target="_blank" rel="noreferrer noopener">Template Repo</a>
+  </footer>
+
+  <!-- About Modal -->
+  <div id="info-popup" class="modal">
+    <div class="modal-content">
+      <button class="icon-btn close-btn" id="close-btn" aria-label="Close" title="Close">
+        ✕
+      </button>
+      <h2>About Base Converter</h2>
+      <p>This tool converts values between bases 2, 8, 10, and 16. Works offline as a PWA and supports light/dark themes.</p>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite">Copied to clipboard!</div>
+  <script src="base-converter.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

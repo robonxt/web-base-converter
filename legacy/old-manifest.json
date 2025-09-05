@@ -1,0 +1,28 @@
+{
+  "name": "Base Converter",
+  "short_name": "Base Calc",
+  "description": "Convert between number bases with ease",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#F5F7FA",
+  "theme_color": "#14B8A6",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
