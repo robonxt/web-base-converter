@@ -5,6 +5,27 @@
     const on = (el, type, handler, opts) => el && el.addEventListener(type, handler, opts);
     const attr = (el, name, value) => (value === undefined ? el.getAttribute(name) : el.setAttribute(name, value));
 
+    // Toast helper (non-blocking, accessible)
+    function showToast(message, type = 'info', duration = 2400) {
+        const el = qs('#toast');
+        if (!el) return;
+        el.textContent = message;
+        el.className = `toast ${type}`;
+        el.removeAttribute('hidden');
+        // next frame to allow transition
+        requestAnimationFrame(() => {
+            el.classList.add('show');
+        });
+        window.clearTimeout(el._hideTimer);
+        el._hideTimer = window.setTimeout(() => {
+            el.classList.remove('show');
+            // hide after transition
+            setTimeout(() => {
+                el.setAttribute('hidden', '');
+            }, 300);
+        }, duration);
+    }
+
     // Service Worker
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
@@ -363,13 +384,41 @@
             updateInfo(parseInt(fromEl.value, 10), parseInt(toEl.value, 10));
         }
 
+        // Temporary success icon swap for copy button
+        function indicateCopied(btn) {
+            if (!btn) return;
+            const icon = btn.querySelector('.material-symbols-rounded');
+            if (!icon) return;
+            // Clear any prior timer
+            if (btn._revertTimer) {
+                clearTimeout(btn._revertTimer);
+                btn._revertTimer = null;
+            }
+            const prevText = icon.textContent;
+            const prevTitle = btn.title;
+            const prevAria = btn.getAttribute('aria-label');
+            btn.classList.add('copied');
+            icon.textContent = 'check';
+            btn.title = 'Copied!';
+            btn.setAttribute('aria-label', 'Copied');
+            btn._revertTimer = setTimeout(() => {
+                icon.textContent = prevText || 'content_copy';
+                btn.title = prevTitle || 'Copy to clipboard';
+                btn.setAttribute('aria-label', prevAria || 'Copy to clipboard');
+                btn.classList.remove('copied');
+                btn._revertTimer = null;
+            }, 1200);
+        }
+
         if (copyBtn) {
             on(copyBtn, 'click', async () => {
                 const text = (qs('#solution')?.innerText || '').trim();
-                if (!text) return;
+                if (!text) { showToast('Nothing to copy', 'info'); return; }
                 try {
                     if (navigator.clipboard && window.isSecureContext) {
                         await navigator.clipboard.writeText(text);
+                        showToast('Copied to clipboard', 'success');
+                        indicateCopied(copyBtn);
                     } else {
                         // Fallback
                         const ta = document.createElement('textarea');
@@ -378,11 +427,12 @@
                         ta.style.left = '-9999px';
                         document.body.appendChild(ta);
                         ta.select();
-                        document.execCommand('copy');
+                        const ok = document.execCommand('copy');
                         document.body.removeChild(ta);
+                        if (ok) { showToast('Copied to clipboard', 'success'); indicateCopied(copyBtn); } else { showToast('Copy failed', 'error'); }
                     }
-                } catch {
-                    // no-op
+                } catch (e) {
+                    showToast('Copy failed', 'error');
                 }
             });
         }

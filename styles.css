@@ -674,8 +674,8 @@ a:hover {
     padding: 0 var(--space-sm);
     box-shadow: var(--shadow-sm) inset;
     transition: border-color var(--duration-quick) var(--ease-standard),
-                box-shadow var(--duration-quick) var(--ease-standard),
-                background-color var(--duration-quick) var(--ease-standard);
+        box-shadow var(--duration-quick) var(--ease-standard),
+        background-color var(--duration-quick) var(--ease-standard);
 }
 
 .input-group input::placeholder {
@@ -725,7 +725,8 @@ a:hover {
 
 .result-row .result {
     flex: 1 1 auto;
-    margin-top: 0; /* align vertically with icon button */
+    margin-top: 0;
+    /* align vertically with icon button */
 }
 
 .conversion-step {
@@ -733,4 +734,41 @@ a:hover {
     color: var(--color-text-medium);
     border-left: var(--stroke-sm) solid var(--color-border-default);
     padding-left: var(--space-sm);
+}
+
+/* Toast */
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: var(--space-lg);
+    transform: translateX(-50%) translateY(16px);
+    background-color: var(--color-surface);
+    color: var(--color-text-high);
+    border: var(--stroke-sm) solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    padding: var(--space-xs) var(--space-md);
+    min-width: 200px;
+    max-width: min(92vw, 480px);
+    text-align: center;
+    opacity: 0;
+    transition: opacity var(--duration-medium) var(--ease-standard), transform var(--duration-medium) var(--ease-standard);
+    z-index: 1000;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.toast.success {
+    border-color: var(--color-success);
+}
+
+.toast.error {
+    border-color: var(--color-error);
+}
+
+.toast.info {
+    border-color: var(--color-primary);
 }
