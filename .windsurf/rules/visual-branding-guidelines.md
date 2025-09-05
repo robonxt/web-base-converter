@@ -2,7 +2,7 @@
 trigger: always_on
 ---
 
-Design system, brand identity, and how-to for components are found here in the README: https://raw.githubusercontent.com/robonxt/robonxt-visual-branding-guidelines/refs/heads/main/index.html
+Design system, brand identity, and how-to for components are found here in the README: https://raw.githubusercontent.com/robonxt/robonxt-visual-branding-guidelines/refs/heads/main/readme.md
 
 Design tokens are found here in the tokens.json: https://raw.githubusercontent.com/robonxt/robonxt-visual-branding-guidelines/refs/heads/main/tokens.json
 
