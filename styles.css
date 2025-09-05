@@ -27,17 +27,11 @@
   --font-family-base: var(--font-family);
 
   /* Typographic Scale */
-  --font-size-jumbo: 10rem;
-  --font-size-display-xl: 6rem;
   --font-size-h1: 2.25rem;
   --font-size-h2: 1.5rem;
   --font-size-h3: 1.25rem;
-  --font-size-body-lead: 1.125rem;
   --font-size-body-base: 1rem;
   --font-size-label: 0.875rem;
-  --font-size-caption: 0.875rem;
-  --font-size-micro: 0.75rem;
-  --font-size-fine-print: 0.625rem;
 
   /* Font Weights */
   --font-weight-black: 900;
@@ -97,8 +91,13 @@
   --color-header: color-mix(in srgb, var(--color-primary), black 20%);
   --color-header-border: color-mix(in srgb, var(--color-primary), black 35%);
   --color-text-high: #FFFFFF; /* ensure maximum contrast on dark */
+  --color-text-medium: #D1D5DB; /* medium emphasis text for dark theme */
   --color-text-low: #6B7280;
   --color-border-default: #374151;
+}
+
+[data-theme='light'] .header-bar-content .btn-icon {
+  color: white;
 }
 
 /* Base */
@@ -178,8 +177,13 @@ h3 {
   font-weight: var(--font-weight-semibold);
 }
 
-p {
+.content-section h2 {
+  margin-top: 0;
   margin-bottom: var(--space-sm);
+}
+
+.content-section > p {
+  margin-bottom: var(--space-lg);
 }
 
 a {
@@ -214,7 +218,7 @@ a:hover {
 .app-container {
   max-width: 960px;
   margin: 0 auto;
-  padding: var(--space-md) var(--space-sm);
+  padding: var(--space-sm);
 }
 
 .header-bar {
@@ -223,7 +227,6 @@ a:hover {
   z-index: 10;
   box-shadow: none;
 }
-
 
 .header-bar-content {
   display: grid;
@@ -269,12 +272,8 @@ a:hover {
   background-color: white;
 }
 
-.header-bar-content .btn-icon {
-  color: white;
-}
 .header-bar-content .btn-icon:hover {
   background-color: rgba(255, 255, 255, 0.16);
-  color: white;
 }
 
 .header-left {
@@ -383,36 +382,6 @@ a:hover {
 .btn:focus-visible {
   outline: var(--stroke-md) solid var(--color-border-focus);
   outline-offset: 2px;
-}
-
-/* Primary Button */
-.btn-primary {
-  background-color: var(--color-primary);
-  color: white;
-}
-
-.btn-primary:hover:not(:disabled) {
-  background-color: color-mix(in srgb, var(--color-primary), black 10%);
-}
-
-.btn-primary:active:not(:disabled) {
-  background-color: color-mix(in srgb, var(--color-primary), black 15%);
-}
-
-
-/* Secondary Button */
-.btn-secondary {
-  background-color: var(--color-secondary);
-  color: white;
-}
-
-.btn-secondary:hover {
-  background-color: color-mix(in srgb, var(--color-secondary), black 10%);
-  color: white;
-}
-
-.btn-secondary:active:not(:disabled) {
-  background-color: color-mix(in srgb, var(--color-secondary), black 15%);
 }
 
 /* Outline Button */
@@ -667,7 +636,7 @@ a:hover {
   border: var(--stroke-sm) solid var(--color-border-default);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  padding: var(--space-md);
+  padding: var(--space-sm);
   max-width: 560px;
   width: min(92vw, 560px);
   transform: scale(0.95);
@@ -686,7 +655,7 @@ a:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-sm);
   padding-bottom: var(--space-sm);
   border-bottom: var(--stroke-sm) solid var(--color-border-default);
 }
@@ -716,7 +685,25 @@ a:hover {
 /* Modal content typography rhythm */
 .modal-content h3 {
   color: var(--color-text-high);
-  margin: 0 0 var(--space-xs);
+  margin: 0 0 var(--space-sm) 0;
+}
+
+.modal-content p {
+  margin-bottom: var(--space-md);
+}
+
+.modal-content ul {
+  margin: var(--space-sm) 0;
+  padding-left: var(--space-md);
+}
+
+.modal-content li {
+  margin-bottom: var(--space-xs);
+  color: var(--color-text-medium);
+}
+
+.modal-content li:last-child {
+  margin-bottom: 0;
 }
 
 
@@ -831,7 +818,7 @@ select::-ms-expand {
 
 .solution-block,
 .conversion-container {
-  margin-top: var(--space-md);
+  margin-top: var(--space-sm);
 }
 
 .result {
@@ -839,7 +826,7 @@ select::-ms-expand {
   padding: var(--space-sm);
   background-color: var(--color-background);
   border: var(--stroke-sm) solid var(--color-border-default);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
   font-size: var(--font-size-body-base);
   color: var(--color-text-high);
   min-height: 44px;
@@ -851,13 +838,17 @@ select::-ms-expand {
 .result-row {
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
+  gap: 0;
   width: 100%;
 }
 
 .result-row .result {
   flex: 1 1 auto;
   margin-top: 0;
+}
+
+.result-row .btn {
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
 }
 
 .conversion-step {
@@ -878,7 +869,7 @@ select::-ms-expand {
   border: var(--stroke-sm) solid var(--color-border-default);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
-  padding: var(--space-xs) var(--space-md);
+  padding: var(--space-sm);
   min-width: 200px;
   max-width: min(92vw, 480px);
   text-align: center;

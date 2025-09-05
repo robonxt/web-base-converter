@@ -33,8 +33,9 @@
                 .then(() => {
                     const btnUpdate = qs('#btn-update-app');
                     if (!btnUpdate) return;
-                    on(btnUpdate, 'click', async () => {
-                        if (!confirm('This will clear ALL cached data (including preferences) and force a fresh update. Continue?')) return;
+
+                    // Function to perform the update
+                    const performUpdate = async () => {
                         try {
                             localStorage.clear();
                             const cacheNames = await caches.keys();
@@ -46,7 +47,59 @@
                             console.error('Update failed:', error);
                             alert('Update failed. Please check console for details.');
                         }
+                    };
+
+                    on(btnUpdate, 'click', () => {
+                        // Show confirmation modal instead of confirm dialog
+                        const modal = qs('#modal-update-confirm');
+                        if (modal) {
+                            modal.classList.add('is-visible');
+                            attr(modal, 'aria-hidden', 'false');
+                            document.body.classList.add('scroll-lock');
+                        }
                     });
+
+                    // Handle cancel button
+                    const cancelBtn = qs('#btn-cancel-update');
+                    if (cancelBtn) {
+                        on(cancelBtn, 'click', () => {
+                            const modal = qs('#modal-update-confirm');
+                            if (modal) {
+                                modal.classList.remove('is-visible');
+                                attr(modal, 'aria-hidden', 'true');
+                                document.body.classList.remove('scroll-lock');
+                            }
+                        });
+                    }
+
+                    // Handle close button (X)
+                    const closeBtn = qs('#btn-modal-close-update-confirm');
+                    if (closeBtn) {
+                        on(closeBtn, 'click', () => {
+                            const modal = qs('#modal-update-confirm');
+                            if (modal) {
+                                modal.classList.remove('is-visible');
+                                attr(modal, 'aria-hidden', 'true');
+                                document.body.classList.remove('scroll-lock');
+                            }
+                        });
+                    }
+
+                    // Handle confirm button
+                    const confirmBtn = qs('#btn-confirm-update');
+                    if (confirmBtn) {
+                        on(confirmBtn, 'click', async () => {
+                            // Close modal first
+                            const modal = qs('#modal-update-confirm');
+                            if (modal) {
+                                modal.classList.remove('is-visible');
+                                attr(modal, 'aria-hidden', 'true');
+                                document.body.classList.remove('scroll-lock');
+                            }
+                            // Perform the update
+                            await performUpdate();
+                        });
+                    }
                 })
                 .catch((error) => console.warn('Service Worker registration failed:', error));
         });
