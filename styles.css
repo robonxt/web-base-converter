@@ -840,7 +840,6 @@ select::-ms-expand {
   background-color: var(--color-background);
   border: var(--stroke-sm) solid var(--color-border-default);
   border-radius: var(--radius-md);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: var(--font-size-body-base);
   color: var(--color-text-high);
   min-height: 44px;
@@ -859,7 +858,6 @@ select::-ms-expand {
 .result-row .result {
   flex: 1 1 auto;
   margin-top: 0;
-  /* align vertically with icon button */
 }
 
 .conversion-step {
