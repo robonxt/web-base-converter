@@ -7,10 +7,7 @@
     <title>Web Template Starter</title>
     <meta name="description" content="Reusable header/toolbar/tabs starter with PWA support.">
     <meta name="theme-color" content="#14B8A6">
-    <!-- Brand Icons -->
-    <link rel="icon" type="image/x-icon" href="assets/icon/sample-favicon.ico">
-    <link rel="icon" type="image/svg+xml" href="assets/icon/sample-favicon.svg" />
-    <link rel="apple-touch-icon" href="assets/icon/sample-apple-touch-icon.png">
+    <!-- Brand Icons (removed file-based links; consider adding data URL or real assets later) -->
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,9 +38,7 @@
                 <div class="mobile-nav">
                     <button class="btn btn-icon" id="btn-mobile-nav" aria-label="Open Menu" aria-haspopup="true"
                         aria-expanded="false">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <use href="assets/icon/icon-menu.svg#icon-menu" />
-                        </svg>
+                        <span class="material-symbols-rounded">menu</span>
                     </button>
                     <div class="mobile-nav-dropdown" id="mobile-nav-dropdown" role="menu"></div>
                 </div>
@@ -56,14 +51,10 @@
 
             <div class="header-controls">
                 <button class="btn btn-icon" id="btn-show-settings" aria-label="Show Settings" title="Settings">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <use href="assets/icon/icon-settings.svg#icon-settings" />
-                    </svg>
+                    <span class="material-symbols-rounded">settings</span>
                 </button>
                 <button class="btn btn-icon" id="btn-show-info" aria-label="Show Information" title="Info">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <use href="assets/icon/icon-info.svg#icon-info" />
-                    </svg>
+                    <span class="material-symbols-rounded">info</span>
                 </button>
             </div>
         </div>
@@ -137,28 +128,20 @@
             <div class="modal-header">
                 <h2 id="heading-settings" class="modal-title">Settings</h2>
                 <button class="btn btn-icon btn-modal-close" id="btn-modal-close-settings" aria-label="Close">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <use href="assets/icon/icon-close.svg#icon-close" />
-                    </svg>
+                    <span class="material-symbols-rounded">close</span>
                 </button>
             </div>
             <div class="modal-content" id="content-settings">
                 <div class="settings-grid">
                     <button id="btn-toggle-theme" class="btn btn-outline" title="Toggle Theme"
                         aria-label="Toggle Theme">
-                        <svg viewBox="0 0 24 24" fill="currentColor" class="icon-theme-light">
-                            <use href="assets/icon/icon-sun.svg#icon-sun" />
-                        </svg>
-                        <svg viewBox="0 0 24 24" fill="currentColor" class="icon-theme-dark">
-                            <use href="assets/icon/icon-moon.svg#icon-moon" />
-                        </svg>
+                        <span class="material-symbols-rounded icon-theme-light">light_mode</span>
+                        <span class="material-symbols-rounded icon-theme-dark">dark_mode</span>
                         Toggle Theme
                     </button>
                     <button id="btn-update-app" class="btn btn-danger" title="Install Updates"
                         aria-label="Install Updates">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <use href="assets/icon/icon-refresh.svg#icon-refresh" />
-                        </svg>
+                        <span class="material-symbols-rounded">refresh</span>
                         Update
                     </button>
                 </div>
@@ -172,9 +155,7 @@
             <div class="modal-header">
                 <h2 id="heading-info" class="modal-title">About this Template</h2>
                 <button class="btn btn-icon btn-modal-close" id="btn-modal-close-info" aria-label="Close">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <use href="assets/icon/icon-close.svg#icon-close" />
-                    </svg>
+                    <span class="material-symbols-rounded">close</span>
                 </button>
             </div>
             <div class="modal-content" id="content-info">

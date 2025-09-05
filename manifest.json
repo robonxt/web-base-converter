@@ -8,37 +8,7 @@
     "background_color": "#F5F7FA",
     "theme_color": "#14B8A6",
     "orientation": "portrait",
-    "icons": [
-      {
-        "src": "assets/icon/sample-favicon.ico",
-        "sizes": "64x64",
-        "type": "image/x-icon"
-      },
-      {
-        "src": "assets/icon/sample-android-chrome-192.png",
-        "sizes": "192x192",
-        "type": "image/png",
-        "purpose": "any maskable"
-      },
-      {
-        "src": "assets/icon/sample-android-chrome-512.png",
-        "sizes": "512x512",
-        "type": "image/png",
-        "purpose": "any maskable"
-      },
-      {
-        "src": "assets/icon/sample-apple-touch-icon.png",
-        "sizes": "180x180",
-        "type": "image/png",
-        "purpose": "any"
-      },
-      {
-        "src": "assets/icon/sample-mstile.png",
-        "sizes": "144x144",
-        "type": "image/png",
-        "purpose": "any"
-      }
-    ],
+    "icons": [],
     "categories": ["utilities", "productivity"],
     "screenshots": [],
     "shortcuts": []

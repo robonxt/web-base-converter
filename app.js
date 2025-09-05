@@ -219,7 +219,7 @@
             attr(link, 'data-tab', tabName);
             link.className = 'mobile-nav-link';
             const iconMap = {
-                home: 'home',
+                home: 'home'
             };
             const iconName = iconMap[tabName] || 'chevron_right';
             const icon = document.createElement('span');

@@ -6,20 +6,7 @@ const ASSETS = [
   './app.js',
   './base-converter.js',
   './manifest.json',
-  './sw.js',
-  './assets/icon/sample-android-chrome-192.png',
-  './assets/icon/sample-android-chrome-512.png',
-  './assets/icon/sample-apple-touch-icon.png',
-  './assets/icon/sample-favicon.ico',
-  './assets/icon/sample-favicon.svg',
-  './assets/icon/sample-mstile.png',
-  './assets/icon/icon-menu.svg',
-  './assets/icon/icon-info.svg',
-  './assets/icon/icon-settings.svg',
-  './assets/icon/icon-refresh.svg',
-  './assets/icon/icon-close.svg',
-  './assets/icon/icon-sun.svg',
-  './assets/icon/icon-moon.svg'
+  './sw.js'
 ];
 
 // Install: precache assets (ignore individual failures)
