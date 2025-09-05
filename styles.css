@@ -17,7 +17,10 @@
   --color-accent: var(--bold-red);
   --color-background: var(--paper);
   --color-surface: var(--paper);
-  --color-text-high: var(--slate);
+  /* Distinct header surface (Deep Teal) */
+  --color-header: #0F8F83; /* deep teal */
+  --color-header-border: #0B6B62; /* darker teal for border */
+  --color-text-high: var(--onyx);
   --color-text-medium: var(--medium-gray);
   --color-text-low: var(--light-gray);
   --color-border-default: var(--light-gray);
@@ -63,8 +66,6 @@
   --space-lg: 32px;
   --space-xl: 48px;
   --space-2xl: 64px;
-  --space-2xs: 4px;
-  /* half step for compact UI elements */
 
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -101,7 +102,9 @@
 [data-theme='dark'] {
   --color-background: var(--deep-onyx);
   --color-surface: var(--onyx);
-  --color-text-high: var(--paper);
+  --color-header: #0B6B62; /* slightly deeper teal for dark mode */
+  --color-header-border: #084D47;
+  --color-text-high: #FFFFFF; /* ensure maximum contrast on dark */
   --color-text-low: var(--slate);
   --color-border-default: var(--slate);
 }
@@ -219,14 +222,13 @@ a:hover {
 .app-container {
   max-width: 960px;
   margin: 0 auto;
-  padding: var(--space-lg) var(--space-md);
+  padding: var(--space-md) var(--space-sm);
 }
 
 .header-bar {
   position: sticky;
   top: 0;
   z-index: 10;
-  background-color: transparent;
   box-shadow: none;
 }
 
@@ -238,15 +240,51 @@ a:hover {
   align-items: center;
   max-width: 960px;
   margin: 0 auto;
-  padding: var(--space-xs) var(--space-md);
+  padding: var(--space-xs) var(--space-sm);
   height: 64px;
-  background-color: var(--color-surface);
-  border: var(--stroke-sm) solid var(--color-border-default);
+  background-color: var(--color-header);
+  border: var(--stroke-sm) solid var(--color-header-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   transition: background-color var(--duration-medium) var(--ease-standard),
     border-color var(--duration-medium) var(--ease-standard),
     box-shadow var(--duration-medium) var(--ease-standard);
+  position: relative;
+  overflow: hidden;
+}
+/* Ensure strong contrast for content inside the colored header */
+.header-bar-content h1,
+.header-bar-content h2,
+.header-bar-content h3,
+.header-bar-content a {
+  color: white;
+}
+
+.header-bar-content .tab-list {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.24);
+}
+.header-bar-content .tab-button {
+  color: rgba(255, 255, 255, 0.9);
+}
+.header-bar-content .tab-button:hover {
+  color: white;
+}
+.header-bar-content .tab-button.active {
+  color: var(--color-header);
+}
+.header-bar-content .tab-slider {
+  background-color: white;
+}
+
+.header-bar-content .btn-ghost,
+.header-bar-content .btn-icon {
+  color: white;
+}
+.header-bar-content .btn-ghost:hover,
+.header-bar-content .btn-icon:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+  color: white;
 }
 
 .header-left {
@@ -255,7 +293,6 @@ a:hover {
   gap: var(--space-sm);
   justify-self: start;
 }
-
 
 .header-controls {
   display: flex;
@@ -269,7 +306,7 @@ a:hover {
   background-color: var(--color-background);
   border: var(--stroke-sm) solid var(--color-border-default);
   border-radius: var(--radius-full);
-  padding: var(--space-2xs);
+  padding: var(--space-xs);
   position: relative;
 }
 
@@ -298,9 +335,9 @@ a:hover {
 
 .tab-slider {
   position: absolute;
-  top: var(--space-2xs);
+  top: var(--space-xs);
   left: 0;
-  height: calc(100% - (var(--space-2xs) * 2));
+  height: calc(100% - (var(--space-xs) * 2));
   background-color: var(--color-primary);
   border-radius: var(--radius-full);
   box-shadow: var(--shadow-sm);
@@ -314,7 +351,7 @@ a:hover {
 }
 
 .content-section {
-  padding: var(--space-md);
+  padding: var(--space-sm);
   background-color: var(--color-surface);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
@@ -451,6 +488,7 @@ a:hover {
   line-height: 1;
   display: inline-block;
 }
+
 /* Ensure Material Symbols icons match SVG sizing within buttons */
 
 /* Mobile Navigation */
@@ -608,7 +646,7 @@ a:hover {
 /* Divider between menu groups */
 .menu-divider {
   height: var(--stroke-sm);
-  margin: var(--space-2xs) 0;
+  margin: var(--space-xs) 0;
   background-color: var(--color-border-default);
 }
 
@@ -637,6 +675,7 @@ a:hover {
   visibility: hidden;
   transition: opacity var(--duration-medium) var(--ease-standard), visibility 0s var(--duration-medium);
   backdrop-filter: blur(2px);
+  z-index: 1100;
 }
 
 .overlay.is-visible {
@@ -650,7 +689,7 @@ a:hover {
   border: var(--stroke-sm) solid var(--color-border-default);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  padding: var(--space-lg);
+  padding: var(--space-md);
   max-width: 560px;
   width: min(92vw, 560px);
   transform: scale(0.95);
@@ -681,15 +720,25 @@ a:hover {
 
 .modal-content {
   color: var(--color-text-medium);
-  padding: var(--space-sm);
+  padding: var(--space-xs);
   max-height: min(70vh, 640px);
   overflow: auto;
 }
 
-.menu-divider {
-  height: var(--stroke-sm);
-  margin: var(--space-2xs) 0;
-  background-color: var(--color-border-default);
+/* Modal footer */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: var(--stroke-sm) solid var(--color-border-default);
+}
+
+/* Modal content typography rhythm */
+.modal-content h3 {
+  color: var(--color-text-high);
+  margin: 0 0 var(--space-xs);
 }
 
 
@@ -723,7 +772,7 @@ a:hover {
 .input-group {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2xs);
+  gap: var(--space-xs);
 }
 
 /* Keep base selects side-by-side regardless of breakpoint */
@@ -772,7 +821,7 @@ a:hover {
   -moz-appearance: none;
   appearance: none;
   cursor: pointer;
-  padding-right: calc(var(--touch-target) + var(--space-2xs));
+  padding-right: calc(var(--touch-target) + var(--space-xs));
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M7 10l5 5 5-5' stroke='%238A94A6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right var(--space-sm) center;
@@ -808,7 +857,7 @@ select::-ms-expand {
 }
 
 .result {
-  margin-top: var(--space-2xs);
+  margin-top: var(--space-xs);
   padding: var(--space-sm);
   background-color: var(--color-background);
   border: var(--stroke-sm) solid var(--color-border-default);
@@ -825,7 +874,7 @@ select::-ms-expand {
 .result-row {
   display: flex;
   align-items: center;
-  gap: var(--space-2xs);
+  gap: var(--space-xs);
   width: 100%;
 }
 
@@ -836,7 +885,7 @@ select::-ms-expand {
 }
 
 .conversion-step {
-  padding: var(--space-2xs) 0;
+  padding: var(--space-xs) 0;
   color: var(--color-text-medium);
   border-left: var(--stroke-sm) solid var(--color-border-default);
   padding-left: var(--space-sm);

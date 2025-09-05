@@ -1,7 +1,7 @@
 {
-    "name": "Web Template Starter",
-    "short_name": "Template",
-    "description": "Reusable header/toolbar/tabs starter with PWA support.",
+    "name": "Base Converter",
+    "short_name": "Base Calc",
+    "description": "Convert between number bases with ease",
     "start_url": "./index.html",
     "display": "standalone",
     "display_override": ["standalone", "minimal-ui"],
