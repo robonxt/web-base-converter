@@ -727,22 +727,22 @@ a:hover {
 /* Modal content typography rhythm */
 .modal-content h3 {
   color: var(--color-text-high);
-  margin: 0 0 var(--space-sm) 0;
+  margin: 0 0 var(--space-xs) 0;
 }
 
 .modal-content h4 {
   color: var(--color-text-high);
   font-weight: var(--font-weight-semibold);
-  margin-top: var(--space-md);
+  margin-top: var(--space-sm);
   margin-bottom: var(--space-xs);
 }
 
 .modal-content p {
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-sm);
 }
 
 .modal-content ul {
-  margin: var(--space-sm) 0;
+  margin: var(--space-xs) 0;
   padding-left: var(--space-md);
 }
 
@@ -770,7 +770,7 @@ a:hover {
   overflow: auto;
   white-space: pre-wrap;
   word-wrap: break-word;
-  margin: var(--space-xs) 0 var(--space-md);
+  margin: var(--space-xs) 0 var(--space-sm);
 }
 
 .modal-content code {
@@ -800,7 +800,7 @@ a:hover {
 
 /* Tool/Form Controls */
 .tool-form {
-  margin-top: var(--space-sm);
+  margin-top: 0;
 }
 
 .form-grid {
@@ -913,7 +913,8 @@ select::-ms-expand {
     'label label'
     'result button';
   align-items: center;
-  gap: var(--space-xs);
+  row-gap: var(--space-xs);
+  column-gap: 0; /* No gap between result and copy button */
   width: 100%;
 }
 
@@ -927,6 +928,7 @@ select::-ms-expand {
 .result-row .btn {
   grid-area: button;
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  height: var(--touch-target);
 }
 
 .result-row label,
