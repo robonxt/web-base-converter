@@ -10,6 +10,10 @@
   --color-secondary: var(--brand-red);
   --color-background: #FFFFFF;
   --color-surface: #FFFFFF;
+  /* Text/Icon on colored primary surfaces (e.g., filled primary areas) */
+  --color-on-primary: #FFFFFF;
+  /* Text/Icon on surface backgrounds (adapts via --color-text-high) */
+  --color-on-surface: var(--color-text-high);
   /* Header uses brand teal with token-consistent mixes */
   --color-header: var(--color-primary);
   --color-header-border: color-mix(in srgb, var(--color-primary), black 25%);
@@ -90,14 +94,19 @@
   --color-surface: #1F2937;
   --color-header: color-mix(in srgb, var(--color-primary), black 20%);
   --color-header-border: color-mix(in srgb, var(--color-primary), black 35%);
-  --color-text-high: #FFFFFF; /* ensure maximum contrast on dark */
-  --color-text-medium: #D1D5DB; /* medium emphasis text for dark theme */
+  --color-text-high: #FFFFFF;
+  /* ensure maximum contrast on dark */
+  --color-text-medium: #D1D5DB;
+  /* medium emphasis text for dark theme */
   --color-text-low: #6B7280;
   --color-border-default: #374151;
+  /* Keep on-primary as white for contrast against chroma surfaces; on-surface follows text-high */
+  --color-on-primary: #FFFFFF;
+  --color-on-surface: var(--color-text-high);
 }
 
 [data-theme='light'] .header-bar-content .btn-icon {
-  color: white;
+  color: var(--color-on-primary);
 }
 
 /* Base */
@@ -129,8 +138,8 @@ body {
 
 /* Subtle, brand-aligned scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: var(--space-xs);
+  height: var(--space-xs);
 }
 
 ::-webkit-scrollbar-track {
@@ -182,7 +191,7 @@ h3 {
   margin-bottom: var(--space-sm);
 }
 
-.content-section > p {
+.content-section>p {
   margin-bottom: var(--space-lg);
 }
 
@@ -236,7 +245,7 @@ a:hover {
   max-width: 960px;
   margin: 0 auto;
   padding: var(--space-xs) var(--space-sm);
-  height: 64px;
+  height: var(--space-2xl);
   background-color: var(--color-header);
   border: var(--stroke-sm) solid var(--color-header-border);
   border-radius: var(--radius-lg);
@@ -246,29 +255,34 @@ a:hover {
     box-shadow var(--duration-medium) var(--ease-standard);
   position: relative;
 }
+
 /* Ensure strong contrast for content inside the colored header */
 .header-bar-content h1,
 .header-bar-content h2,
 .header-bar-content h3,
 .header-bar-content a {
-  color: white;
+  color: var(--color-on-primary);
 }
 
 .header-bar-content .tab-list {
   background-color: rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.24);
 }
+
 .header-bar-content .tab-button {
   color: rgba(255, 255, 255, 0.9);
 }
+
 .header-bar-content .tab-button:hover {
-  color: white;
+  color: var(--color-on-primary);
 }
+
 .header-bar-content .tab-button.active {
   color: var(--color-header);
 }
+
 .header-bar-content .tab-slider {
-  background-color: white;
+  background-color: var(--color-on-primary);
 }
 
 .header-bar-content .btn-icon:hover {
@@ -317,7 +331,7 @@ a:hover {
 }
 
 .tab-button.active {
-  color: white;
+  color: var(--color-on-primary);
   /* On primary slider for contrast */
 }
 
@@ -536,13 +550,13 @@ a:hover {
   position: absolute;
   right: var(--space-sm);
   top: 50%;
-  width: 16px;
-  height: 16px;
+  width: var(--icon-sm);
+  height: var(--icon-sm);
   transform: translateY(-50%);
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M7 10l5 5 5-5' stroke='%234B5563' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-size: 16px 16px;
+  background-size: var(--icon-sm) var(--icon-sm);
 }
 
 .select-trigger:hover {
@@ -562,15 +576,12 @@ a:hover {
   z-index: 30;
 }
 
-.mobile-nav-link:hover {
-  background-color: var(--color-background);
-}
-
 .mobile-nav-link.active {
   color: var(--color-primary);
   font-weight: var(--font-weight-medium);
 }
 
+.mobile-nav-link:hover,
 .mobile-nav-link:focus-visible {
   background-color: var(--color-background);
 }
@@ -664,6 +675,19 @@ a:hover {
   font-weight: var(--font-weight-semibold);
 }
 
+/* Titlebar groups info logo and title */
+.modal-titlebar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.info-logo {
+  height: 28px;
+  width: auto;
+  display: block;
+}
+
 .modal-content {
   color: var(--color-text-medium);
   padding: var(--space-xs);
@@ -681,10 +705,36 @@ a:hover {
   border-top: var(--stroke-sm) solid var(--color-border-default);
 }
 
+/* Footer variant with credit text */
+.modal-footer.has-credit {
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.modal-credit {
+  color: var(--color-text-medium);
+  font-size: var(--font-size-label);
+}
+
+.modal-credit a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 /* Modal content typography rhythm */
 .modal-content h3 {
   color: var(--color-text-high);
   margin: 0 0 var(--space-sm) 0;
+}
+
+.modal-content h4 {
+  color: var(--color-text-high);
+  font-weight: var(--font-weight-semibold);
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-xs);
 }
 
 .modal-content p {
@@ -703,6 +753,32 @@ a:hover {
 
 .modal-content li:last-child {
   margin-bottom: 0;
+}
+
+.modal-content hr {
+  border: 0;
+  height: var(--stroke-sm);
+  background-color: var(--color-border-default);
+  margin: var(--space-md) 0;
+}
+
+.modal-content pre {
+  background-color: var(--color-background);
+  border: var(--stroke-sm) solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-xs) var(--space-sm);
+  overflow: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin: var(--space-xs) 0 var(--space-md);
+}
+
+.modal-content code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 0.9375rem;
+  color: var(--color-text-high);
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 
@@ -757,11 +833,6 @@ a:hover {
   align-self: flex-end;
 }
 
-.input-group label {
-  font-size: var(--font-size-label);
-  color: var(--color-text-medium);
-}
-
 .input-group input,
 .input-group select,
 .input-group textarea {
@@ -789,7 +860,7 @@ a:hover {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M7 10l5 5 5-5' stroke='%234B5563' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right var(--space-sm) center;
-  background-size: 16px 16px;
+  background-size: var(--icon-sm) var(--icon-sm);
 }
 
 /* Hide default arrow in old Edge/IE */
@@ -828,26 +899,40 @@ select::-ms-expand {
   border-radius: var(--radius-md) 0 0 var(--radius-md);
   font-size: var(--font-size-body-base);
   color: var(--color-text-high);
-  min-height: 44px;
+  min-height: var(--touch-target);
   display: flex;
   align-items: center;
 }
 
 /* Layout for result content and copy button */
+/* Match other inputs: label on its own line, field + action on next line */
 .result-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    'label label'
+    'result button';
   align-items: center;
-  gap: 0;
+  gap: var(--space-xs);
   width: 100%;
 }
 
+.result-row label { grid-area: label; }
+
 .result-row .result {
-  flex: 1 1 auto;
+  grid-area: result;
   margin-top: 0;
 }
 
 .result-row .btn {
+  grid-area: button;
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.result-row label,
+.input-group label {
+  font-size: var(--font-size-label);
+  color: var(--color-text-medium);
 }
 
 .conversion-step {
@@ -862,7 +947,7 @@ select::-ms-expand {
   position: fixed;
   left: 50%;
   bottom: var(--space-lg);
-  transform: translateX(-50%) translateY(16px);
+  transform: translateX(-50%) translateY(var(--space-sm));
   background-color: var(--color-surface);
   color: var(--color-text-high);
   border: var(--stroke-sm) solid var(--color-border-default);

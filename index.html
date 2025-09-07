@@ -10,7 +10,20 @@
     <meta name="description"
         content="Effortlessly convert numerical values between binary, octal, decimal, and hexadecimal bases.">
     <meta name="theme-color" content="#14B8A6">
-    <!-- Brand Icons (removed file-based links; consider adding data URL or real assets later) -->
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://base-converter.robonxt.xyz/assets/logo/base-converter-logo-v1.png">
+    <meta property="og:url" content="https://base-converter.robonxt.xyz">
+    <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icon/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/icon/android-chrome-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/icon/android-chrome-512.png">
+    <link rel="apple-touch-icon" href="assets/icon/apple-touch-icon.png">
+    <meta name="msapplication-TileImage" content="assets/icon/mstile.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="manifest" href="manifest.json">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,7 +61,7 @@
                 <div class="mobile-nav-title" id="mobile-nav-title"></div>
                 <nav class="tab-list" id="wrapper-tabs">
                     <div class="tab-slider"></div>
-                    <button class="tab-button active" data-tab="home">Home</button>
+                    <button class="tab-button active" data-tab="base-converter">Base Converter</button>
                 </nav>
             </div>
 
@@ -64,11 +77,7 @@
     </header>
 
     <main class="app-container">
-
-        <section class="content-section" data-content="home">
-            <h2>Base Converter Tool</h2>
-            <p>Effortlessly convert numerical values between binary, octal, decimal, and hexadecimal bases.</p>
-
+        <section class="content-section" data-content="base-converter">
             <form id="converter-form" class="tool-form" autocomplete="off">
                 <div class="form-grid">
                     <div class="input-group">
@@ -107,8 +116,8 @@
             </form>
 
             <div class="solution-block">
-                <h3>Conversion Output</h3>
                 <div class="result-row">
+                    <label for="solution">Solution</label>
                     <div id="solution" class="result" aria-live="polite"></div>
                     <button type="button" id="copy-solution" class="btn btn-icon btn-outline"
                         aria-label="Copy result to clipboard" title="Copy to clipboard">
@@ -116,14 +125,7 @@
                     </button>
                 </div>
             </div>
-
-            <div class="conversion-container">
-                <h3>Step-by-Step Process</h3>
-                <div id="conversionSteps"></div>
-            </div>
         </section>
-        <section class="content-section" data-content="about" hidden>About content.</section>
-        <section class="content-section" data-content="contact" hidden>Contact content.</section>
     </main>
 
     <div class="overlay" id="modal-settings" role="dialog" aria-modal="true" aria-labelledby="heading-settings"
@@ -157,7 +159,10 @@
         aria-hidden="true">
         <div class="modal-dialog" tabindex="-1">
             <div class="modal-header">
-                <h2 id="heading-info" class="modal-title">About Base Converter Tool</h2>
+                <div class="modal-titlebar">
+                    <img src="assets/logo/base-converter-logo-v1.svg" alt="Base Converter" class="info-logo" />
+                    <h2 id="heading-info" class="modal-title">About Base Converter Tool</h2>
+                </div>
                 <button class="btn btn-icon btn-modal-close" id="btn-modal-close-info" aria-label="Close">
                     <span class="material-symbols-rounded">close</span>
                 </button>
@@ -178,8 +183,63 @@
                     <li><strong>Result:</strong> Exact conversion plus the method used.</li>
                     <li><strong>Digits:</strong> Bin 0–1 · Oct 0–7 · Dec 0–9 · Hex 0–9, A–F.</li>
                 </ul>
+
+                <hr>
+                <h3>Conversion Methods</h3>
+
+                <h4>Binary (2) → Octal (8)</h4>
+                <p>Group binary digits into sets of 3 (from right) and convert each group to octal.</p>
+                <pre><code>Example: 101011
+Group into threes: 101 011
+101 = 5, 011 = 3 → 53</code></pre>
+
+                <h4>Binary (2) → Decimal (10)</h4>
+                <p>Multiply each binary digit by 2 raised to its position power (from right, starting at 0) and sum.</p>
+                <pre><code>Example: 1011
+1×2³ + 0×2² + 1×2¹ + 1×2⁰ = 11</code></pre>
+
+                <h4>Binary (2) → Hex (16)</h4>
+                <p>Group binary digits into sets of 4 (from right) and convert each group to hex.</p>
+                <pre><code>Example: 101111 → 10 1111 → 2F</code></pre>
+
+                <h4>Octal (8) → Binary (2)</h4>
+                <p>Convert each octal digit to its 3-digit binary equivalent.</p>
+                <pre><code>Example: 27 → 010 111 → 010111</code></pre>
+
+                <h4>Octal (8) → Decimal (10)</h4>
+                <p>Multiply each octal digit by 8 raised to its position power and sum.</p>
+                <pre><code>Example: 37 → 3×8¹ + 7×8⁰ = 31</code></pre>
+
+                <h4>Octal (8) → Hex (16)</h4>
+                <p>Convert to binary, then group into sets of 4 and convert to hex.</p>
+                <pre><code>Example: 27 → 010111 → 0010 1111 → 2F</code></pre>
+
+                <h4>Decimal (10) → Binary (2)</h4>
+                <p>Repeatedly divide by 2 and record remainders in reverse order.</p>
+                <pre><code>Example: 13 → remainders: 1,0,1,1 → 1101</code></pre>
+
+                <h4>Decimal (10) → Octal (8)</h4>
+                <p>Repeatedly divide by 8 and record remainders in reverse order.</p>
+                <pre><code>Example: 59 → remainders: 3,7 → 73</code></pre>
+
+                <h4>Decimal (10) → Hex (16)</h4>
+                <p>Repeatedly divide by 16 and record remainders (10=A, …, 15=F) in reverse order.</p>
+                <pre><code>Example: 43 → remainders: B,2 → 2B</code></pre>
+
+                <h4>Hex (16) → Binary (2)</h4>
+                <p>Convert each hex digit to its 4-digit binary equivalent.</p>
+                <pre><code>Example: 2F → 0010 1111 → 00101111</code></pre>
+
+                <h4>Hex (16) → Octal (8)</h4>
+                <p>Convert to binary, then group into sets of 3 and convert to octal.</p>
+                <pre><code>Example: 2F → 00101111 → 000 101 111 → 057</code></pre>
+
+                <h4>Hex (16) → Decimal (10)</h4>
+                <p>Multiply each hex digit by 16 raised to its position power and sum.</p>
+                <pre><code>Example: 2F → 2×16¹ + 15×16⁰ = 47</code></pre>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer has-credit">
+                <span class="modal-credit">Created by <a href="https://robonxt.xyz" target="_blank" rel="noopener">robonxt</a> · © 2025</span>
                 <a class="btn btn-outline" href="https://github.com/robonxt/web-base-converter" target="_blank"
                     rel="noopener">View source code on GitHub</a>
             </div>

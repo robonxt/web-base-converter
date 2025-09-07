@@ -1,6 +1,6 @@
 {
     "name": "Base Converter",
-    "short_name": "Base Calc",
+    "short_name": "Base Conv",
     "description": "Convert between number bases with ease",
     "start_url": "./index.html",
     "display": "standalone",
@@ -8,7 +8,37 @@
     "background_color": "#F5F7FA",
     "theme_color": "#14B8A6",
     "orientation": "portrait",
-    "icons": [],
+    "icons": [
+      {
+        "src": "assets/icon/favicon.ico",
+        "sizes": "64x64",
+        "type": "image/x-icon"
+      },
+      {
+        "src": "assets/icon/android-chrome-192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "any maskable"
+      },
+      {
+        "src": "assets/icon/android-chrome-512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "any maskable"
+      },
+      {
+        "src": "assets/icon/apple-touch-icon.png",
+        "sizes": "180x180",
+        "type": "image/png",
+        "purpose": "any"
+      },
+      {
+        "src": "assets/icon/mstile.png",
+        "sizes": "144x144",
+        "type": "image/png",
+        "purpose": "any"
+      }
+    ],
     "categories": ["utilities", "productivity"],
     "screenshots": [],
     "shortcuts": []

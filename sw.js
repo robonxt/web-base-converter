@@ -6,7 +6,14 @@ const ASSETS = [
   './app.js',
   './base-converter.js',
   './manifest.json',
-  './sw.js'
+  './sw.js',
+  './assets/icon/favicon.ico',
+  './assets/icon/android-chrome-192.png',
+  './assets/icon/android-chrome-512.png',
+  './assets/icon/apple-touch-icon.png',
+  './assets/icon/mstile.png',
+  './assets/logo/calculator-minimalistic-svgrepo-com.png',
+  './assets/logo/calculator-minimalistic-svgrepo-com.svg'
 ];
 
 // Install: precache assets (ignore individual failures)
