@@ -605,7 +605,7 @@
                 try {
                     if (navigator.clipboard && window.isSecureContext) {
                         await navigator.clipboard.writeText(text);
-                        showToast('Copied to clipboard', 'success');
+                        showToast('Copied', 'success');
                         indicateCopied(copyBtn);
                     } else {
                         // Fallback
@@ -617,7 +617,7 @@
                         ta.select();
                         const ok = document.execCommand('copy');
                         document.body.removeChild(ta);
-                        if (ok) { showToast('Copied to clipboard', 'success'); indicateCopied(copyBtn); } else { showToast('Copy failed', 'error'); }
+                        if (ok) { showToast('Copied', 'success'); indicateCopied(copyBtn); } else { showToast('Copy failed', 'error'); }
                     }
                 } catch (e) {
                     showToast('Copy failed', 'error');

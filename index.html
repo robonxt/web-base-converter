@@ -52,7 +52,7 @@
         <div class="header-bar-content">
             <div class="header-left">
                 <div class="mobile-nav">
-                    <button class="btn btn-icon" id="btn-mobile-nav" aria-label="Open Menu" aria-haspopup="true"
+                    <button class="btn btn-icon" id="btn-mobile-nav" aria-label="Open menu" aria-haspopup="true"
                         aria-expanded="false">
                         <span class="material-symbols-rounded">menu</span>
                     </button>
@@ -66,10 +66,10 @@
             </div>
 
             <div class="header-controls">
-                <button class="btn btn-icon" id="btn-show-settings" aria-label="Show Settings" title="Settings">
+                <button class="btn btn-icon" id="btn-show-settings" aria-label="Show settings" title="Settings">
                     <span class="material-symbols-rounded">settings</span>
                 </button>
-                <button class="btn btn-icon" id="btn-show-info" aria-label="Show Information" title="Info">
+                <button class="btn btn-icon" id="btn-show-info" aria-label="Show info" title="Info">
                     <span class="material-symbols-rounded">info</span>
                 </button>
             </div>
@@ -82,7 +82,7 @@
                 <div class="form-grid">
                     <div class="input-group">
                         <label for="inputValue">Value</label>
-                        <input type="text" id="inputValue" placeholder="e.g., 101101 or 2F" required />
+                        <input type="text" id="inputValue" placeholder="e.g. 101101 or 2F" required />
                     </div>
 
                     <div class="bases-row">
@@ -117,10 +117,10 @@
 
             <div class="solution-block">
                 <div class="result-row">
-                    <label for="solution">Solution</label>
+                    <label for="solution">Result</label>
                     <div id="solution" class="result" aria-live="polite"></div>
                     <button type="button" id="copy-solution" class="btn btn-icon btn-outline"
-                        aria-label="Copy result to clipboard" title="Copy to clipboard">
+                        aria-label="Copy result" title="Copy">
                         <span class="material-symbols-rounded">content_copy</span>
                     </button>
                 </div>
@@ -139,14 +139,14 @@
             </div>
             <div class="modal-content" id="content-settings">
                 <div class="settings-grid">
-                    <button id="btn-toggle-theme" class="btn btn-outline" title="Toggle Theme"
-                        aria-label="Toggle Theme">
+                    <button id="btn-toggle-theme" class="btn btn-outline" title="Toggle theme"
+                        aria-label="Toggle theme">
                         <span class="material-symbols-rounded icon-theme-light">light_mode</span>
                         <span class="material-symbols-rounded icon-theme-dark">dark_mode</span>
-                        Toggle Theme
+                        Toggle theme
                     </button>
-                    <button id="btn-update-app" class="btn btn-danger" title="Install Updates"
-                        aria-label="Install Updates">
+                    <button id="btn-update-app" class="btn btn-danger" title="Install updates"
+                        aria-label="Install updates">
                         <span class="material-symbols-rounded">refresh</span>
                         Update
                     </button>
@@ -161,26 +161,25 @@
             <div class="modal-header">
                 <div class="modal-titlebar">
                     <img src="assets/logo/base-converter-logo-v1.svg" alt="Base Converter" class="info-logo" />
-                    <h2 id="heading-info" class="modal-title">About Base Converter Tool</h2>
+                    <h2 id="heading-info" class="modal-title">About Base Converter</h2>
                 </div>
                 <button class="btn btn-icon btn-modal-close" id="btn-modal-close-info" aria-label="Close">
                     <span class="material-symbols-rounded">close</span>
                 </button>
             </div>
             <div class="modal-content" id="content-info">
-                <h3>Base Converter Tool</h3>
+                <h3>Base Converter</h3>
 
                 <p>Effortlessly convert numerical values between binary, octal, decimal, and hexadecimal bases. Enter a
                     value, select bases, and get instant results.</p>
 
                 <ul>
-                    <li><strong>Set Bases:</strong> Choose <em>From</em> and <em>To</em> (2, 8, 10, 16). Use
+                    <li><strong>Set bases:</strong> Choose <em>From</em> and <em>To</em> (2, 8, 10, 16). Use
                         <em>Swap</em> to flip.</li>
-                    <li><strong>Enter Value:</strong> Only digits valid for the <em>From</em> base are accepted.</li>
-                    <li><strong>Features:</strong> Live result, one-click copy, step-by-step method, light/dark theme,
-                        PWA offline.</li>
-                    <li><strong>Validation:</strong> Invalid characters are flagged immediately.</li>
-                    <li><strong>Result:</strong> Exact conversion plus the method used.</li>
+                    <li><strong>Enter value:</strong> Only digits valid for the <em>From</em> base are accepted.</li>
+                    <li><strong>Features:</strong> Live result, one‑click copy, method steps, light/dark, offline.</li>
+                    <li><strong>Validation:</strong> Invalid characters are flagged.</li>
+                    <li><strong>Result:</strong> Exact conversion plus method.</li>
                     <li><strong>Digits:</strong> Bin 0–1 · Oct 0–7 · Dec 0–9 · Hex 0–9, A–F.</li>
                 </ul>
 
@@ -188,55 +187,52 @@
                 <h3>Conversion Methods</h3>
 
                 <h4>Binary (2) → Octal (8)</h4>
-                <p>Group binary digits into sets of 3 (from right) and convert each group to octal.</p>
-                <pre><code>Example: 101011
-Group into threes: 101 011
-101 = 5, 011 = 3 → 53</code></pre>
+                <p>Group bits in 3s from the right and convert each group to octal.</p>
+                <pre><code>Example: 101011 → 101 011 → 53</code></pre>
 
                 <h4>Binary (2) → Decimal (10)</h4>
-                <p>Multiply each binary digit by 2 raised to its position power (from right, starting at 0) and sum.</p>
-                <pre><code>Example: 1011
-1×2³ + 0×2² + 1×2¹ + 1×2⁰ = 11</code></pre>
+                <p>Sum bits × 2^position (from right, starting at 0).</p>
+                <pre><code>Example: 1011 = 1×2^3 + 0×2^2 + 1×2^1 + 1×2^0 = 11</code></pre>
 
                 <h4>Binary (2) → Hex (16)</h4>
-                <p>Group binary digits into sets of 4 (from right) and convert each group to hex.</p>
-                <pre><code>Example: 101111 → 10 1111 → 2F</code></pre>
+                <p>Group bits in 4s from the right and convert each group to hex.</p>
+                <pre><code>Example: 101111 → 0010 1111 → 2F</code></pre>
 
                 <h4>Octal (8) → Binary (2)</h4>
-                <p>Convert each octal digit to its 3-digit binary equivalent.</p>
+                <p>Map each octal digit to its 3‑bit binary.</p>
                 <pre><code>Example: 27 → 010 111 → 010111</code></pre>
 
                 <h4>Octal (8) → Decimal (10)</h4>
-                <p>Multiply each octal digit by 8 raised to its position power and sum.</p>
-                <pre><code>Example: 37 → 3×8¹ + 7×8⁰ = 31</code></pre>
+                <p>Sum digits × 8^position.</p>
+                <pre><code>Example: 37 = 3×8^1 + 7×8^0 = 31</code></pre>
 
                 <h4>Octal (8) → Hex (16)</h4>
-                <p>Convert to binary, then group into sets of 4 and convert to hex.</p>
+                <p>Convert to binary, group in 4s, then map to hex.</p>
                 <pre><code>Example: 27 → 010111 → 0010 1111 → 2F</code></pre>
 
                 <h4>Decimal (10) → Binary (2)</h4>
-                <p>Repeatedly divide by 2 and record remainders in reverse order.</p>
-                <pre><code>Example: 13 → remainders: 1,0,1,1 → 1101</code></pre>
+                <p>Divide by 2; read remainders in reverse.</p>
+                <pre><code>Example: 13 → remainders 1,0,1,1 → 1101</code></pre>
 
                 <h4>Decimal (10) → Octal (8)</h4>
-                <p>Repeatedly divide by 8 and record remainders in reverse order.</p>
-                <pre><code>Example: 59 → remainders: 3,7 → 73</code></pre>
+                <p>Divide by 8; read remainders in reverse.</p>
+                <pre><code>Example: 59 → remainders 3,7 → 73</code></pre>
 
                 <h4>Decimal (10) → Hex (16)</h4>
-                <p>Repeatedly divide by 16 and record remainders (10=A, …, 15=F) in reverse order.</p>
-                <pre><code>Example: 43 → remainders: B,2 → 2B</code></pre>
+                <p>Divide by 16; map 10–15 to A–F; read remainders in reverse.</p>
+                <pre><code>Example: 43 → remainders B,2 → 2B</code></pre>
 
                 <h4>Hex (16) → Binary (2)</h4>
-                <p>Convert each hex digit to its 4-digit binary equivalent.</p>
+                <p>Map each hex digit to its 4‑bit binary.</p>
                 <pre><code>Example: 2F → 0010 1111 → 00101111</code></pre>
 
                 <h4>Hex (16) → Octal (8)</h4>
-                <p>Convert to binary, then group into sets of 3 and convert to octal.</p>
-                <pre><code>Example: 2F → 00101111 → 000 101 111 → 057</code></pre>
+                <p>Convert to binary, group in 3s, then map to octal.</p>
+                <pre><code>Example: 2F → 0010 1111 → 000 101 111 → 057</code></pre>
 
                 <h4>Hex (16) → Decimal (10)</h4>
-                <p>Multiply each hex digit by 16 raised to its position power and sum.</p>
-                <pre><code>Example: 2F → 2×16¹ + 15×16⁰ = 47</code></pre>
+                <p>Sum digits × 16^position.</p>
+                <pre><code>Example: 2F = 2×16^1 + 15×16^0 = 47</code></pre>
             </div>
             <div class="modal-footer has-credit">
                 <span class="modal-credit">Created by <a href="https://robonxt.xyz" target="_blank" rel="noopener">robonxt</a> · © 2025</span>
@@ -250,7 +246,7 @@ Group into threes: 101 011
         aria-labelledby="heading-update-confirm" aria-hidden="true">
         <div class="modal-dialog" tabindex="-1">
             <div class="modal-header">
-                <h2 id="heading-update-confirm" class="modal-title">Confirm Update</h2>
+                <h2 id="heading-update-confirm" class="modal-title">Confirm update</h2>
                 <button class="btn btn-icon btn-modal-close" id="btn-modal-close-update-confirm" aria-label="Close">
                     <span class="material-symbols-rounded">close</span>
                 </button>
