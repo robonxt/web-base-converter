@@ -1,30 +1,56 @@
 :root {
 
   /* Tokens */
-  --brand-teal: #14B8A6;
-  --brand-red: #B91C1C;
+  /* Logo palette (for logos only, not interactive UI) */
+  --logo-teal: #14B8A6;
+  --logo-red: #B91C1C;
+  --logo-slate: #343F4B;
+  --logo-ink: #111827;
+
+  /* Neutrals */
+  --gray-50: #F9FAFB;
   --gray-200: #E5E7EB;
+  --gray-300: #D1D5DB;
+  --gray-400: #9CA3AF;
+  --gray-500: #6B7280;
+  --gray-600: #4B5563;
+  --gray-700: #374151;
+  --gray-800: #1F2937;
+  --gray-900: #111827;
+  --white: #FFFFFF;
+  --night: #0F172A;
 
   /* Light theme */
-  --color-primary: var(--brand-teal);
-  --color-secondary: var(--brand-red);
-  --color-background: #FFFFFF;
-  --color-surface: #FFFFFF;
+  /* Primary/Accent per tokens (Indigo/Fuchsia) */
+  --color-primary: #4F46E5; /* indigo-600 */
+  --color-primary-hover: #4338CA; /* indigo-700 */
+  --color-primary-active: #3730A3; /* indigo-800 */
+  --color-accent: #C026D3; /* fuchsia-600 */
+  --color-accent-hover: #A21CAF; /* fuchsia-700 */
+
+  --color-background: var(--white);
+  --color-surface: var(--white);
   /* Text/Icon on colored primary surfaces (e.g., filled primary areas) */
   --color-on-primary: #FFFFFF;
   /* Text/Icon on surface backgrounds (adapts via --color-text-high) */
   --color-on-surface: var(--color-text-high);
-  /* Header uses brand teal with token-consistent mixes */
+  /* Header uses primary with token-consistent mixes */
   --color-header: var(--color-primary);
   --color-header-border: color-mix(in srgb, var(--color-primary), black 25%);
-  --color-text-high: #111827;
-  --color-text-medium: #4B5563;
-  --color-text-low: #6B7280;
+  --color-text-high: var(--gray-900);
+  --color-text-medium: var(--gray-600);
+  --color-text-low: var(--gray-400);
   --color-border-default: var(--gray-200);
-  --color-border-focus: var(--brand-teal);
+  --color-border-focus: #6366F1; /* indigo-500 */
   --color-success: #059669;
   --color-warning: #D97706;
   --color-error: #DC2626;
+
+  /* Overlays on primary (avoid hardcoded rgba) */
+  --overlay-on-primary-12: color-mix(in srgb, var(--color-on-primary) 12%, transparent);
+  --overlay-on-primary-16: color-mix(in srgb, var(--color-on-primary) 16%, transparent);
+  --overlay-on-primary-24: color-mix(in srgb, var(--color-on-primary) 24%, transparent);
+  --overlay-on-primary-90: color-mix(in srgb, var(--color-on-primary) 90%, transparent);
 
   /* Typography */
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -90,22 +116,24 @@
 }
 
 [data-theme='dark'] {
-  --color-background: #111827;
-  --color-surface: #1F2937;
+  --color-background: var(--night);
+  --color-surface: var(--gray-800);
   --color-header: color-mix(in srgb, var(--color-primary), black 20%);
   --color-header-border: color-mix(in srgb, var(--color-primary), black 35%);
-  --color-text-high: #FFFFFF;
+  --color-text-high: var(--white);
   /* ensure maximum contrast on dark */
-  --color-text-medium: #D1D5DB;
+  --color-text-medium: var(--gray-300);
   /* medium emphasis text for dark theme */
-  --color-text-low: #6B7280;
-  --color-border-default: #374151;
+  --color-text-low: var(--gray-500);
+  --color-border-default: var(--gray-700);
+  /* Focus ring per tokens */
+  --color-border-focus: #818CF8; /* indigo-400 */
   /* Keep on-primary as white for contrast against chroma surfaces; on-surface follows text-high */
   --color-on-primary: #FFFFFF;
   --color-on-surface: var(--color-text-high);
 }
 
-[data-theme='light'] .header-bar-content .btn-icon {
+.header-bar-content .btn-icon {
   color: var(--color-on-primary);
 }
 
@@ -265,12 +293,12 @@ a:hover {
 }
 
 .header-bar-content .tab-list {
-  background-color: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.24);
+  background-color: var(--overlay-on-primary-12);
+  border-color: var(--overlay-on-primary-24);
 }
 
 .header-bar-content .tab-button {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--overlay-on-primary-90);
 }
 
 .header-bar-content .tab-button:hover {
@@ -286,7 +314,8 @@ a:hover {
 }
 
 .header-bar-content .btn-icon:hover {
-  background-color: rgba(255, 255, 255, 0.16);
+  background-color: var(--overlay-on-primary-16);
+  color: var(--color-on-primary);
 }
 
 .header-left {
@@ -413,12 +442,10 @@ a:hover {
   background-color: color-mix(in srgb, var(--color-primary) 12%, transparent);
 }
 
-/* (Removed) Ghost Button per current spec preference */
-
 /* Destructive Button */
 .btn-danger {
   background-color: var(--color-error);
-  color: white;
+  color: var(--color-on-primary);
 }
 
 .btn-danger:hover:not(:disabled) {
@@ -711,9 +738,9 @@ a:hover {
 
 /* Footer variant with credit text */
 .modal-footer.has-credit {
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: center;
-  flex-wrap: wrap;
   gap: var(--space-sm);
 }
 
@@ -726,6 +753,18 @@ a:hover {
   color: inherit;
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+/* Responsive: stack credit and actions vertically on narrow screens */
+@media (max-width: 480px) {
+  .modal-footer.has-credit {
+    grid-template-columns: 1fr;
+    justify-items: stretch;
+  }
+  .modal-footer.has-credit .btn {
+    width: 100%;
+    justify-self: stretch;
+  }
 }
 
 /* Modal content typography rhythm */
